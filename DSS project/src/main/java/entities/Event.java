@@ -1,4 +1,4 @@
-/*package entities;
+/*packageasas entities;
 
 import java.io.Serializable;
 import java.text.DateFormat;
