@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Search Menu</title>
+	<!-- BOOTSTRAP -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="SearchStyle.css"> 
+	
+	<!-- DROPDOWN AUTOCOMPLETE -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+	
+	<!-- our stuff -->
+	<script src ="UserScripts.js"></script>
+	<script src ="SearchScripts.js"></script>
+	
+	<!-- DATE PICKERS -->
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.1/build/jquery.datetimepicker.full.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.1/jquery.datetimepicker.css">
+
+	<!-- TABLES -->
+	<link rel="stylesheet"	href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+	<script type="text/javascript" 	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	<!-- CHARTS -->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>  
+</head>
+
+<body onload="checkAccessLevel()">
+<div id="container">
+<!--H-->
+	<div id="header">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Ericsson_logo.svg/1135px-Ericsson_logo.svg.png" width="120" height="135" style="float:left;">
+		<!-- <center><img src="logo.PNG" height = "120px"></center>-->
+		<div id="userinfo">
+			<p id="loggedin"></p>
+			<p id="typeofuser"></p>
+			<a href="login.html" onclick="logout()">Logout</a>
+		</div>
+	</div>
+        
+<!--SIDEBAR-->
+    <div Id="sidebar">
+        <div id="searchType" class="sidebar">
+            <h3>Search Criteria</h3>
+            <input id="IMSIbox" class="CSR" type="radio" name="searchType">
+            <label for="IMSIbox"><span></span>IMSI</label><br>
+            <input id="IMSIDatebox" class="CSR" type="radio" name="searchType" >
+            <label for="IMSIDatebox"><span></span>IMSI and Date</label><br>
+            <div class="SE">
+	            <input id="Datebox" type="radio" name="searchType" value="Date" >
+	            <label for="Datebox"><span></span>Date</label><br>
+	            <input id="Modelbox" type="radio" name="searchType" value="Model" >
+	            <label for="Modelbox"><span></span>Phone Model and Date</label><br>
+	            <input id="CauseClassbox" type="radio" name="searchType" value="CauseClass">
+				<label for="CauseClassbox"><span></span>Failure Class</label><br>
+            </div>
+            <div class="NME">
+                <input id="PhoneModelbox" type="radio" name="searchType" value="PhoneModel">
+                <label for="PhoneModelbox"><span></span>Phone Model</label><br>
+            </div>
+        </div>
+ 
+ 		<div id="returnTypeForIMSI" class="sidebar notSearch">
+            <h3>Return Type for the Searched IMSI</h3>
+            <form action="">
+                <input id="EventAndCause" type="radio" name="returnDateType" value="UniqueIMSI">
+                <label for="EventAndCause"><span></span>Event ID and Cause Code</label><br>
+                <input id="UniqueCause" type="radio" name="returnDateType" value="UniqueIMSI">
+                <label for="UniqueCause"><span></span>Unique Cause Codes</label><br>
+            </form>
+        </div>
+        
+        <div id="returnTypeForDate" class="sidebar notSearch">
+			<h3>Return Type for the Searched Period</h3>
+			<input id="IMSIunique" type="radio" name="returnDateType" value="UniqueIMSI">
+			<label for="IMSIunique"><span></span>Unique IMSI occurences</label><br>
+			<div class="NME">
+				<input id="IMSIcount" type="radio" name="returnDateType" >
+				<label for="IMSIcount"><span></span>Number of failures for each IMSI and the total duration of failures</label><br>
+				<input type="radio" name="returnDateType" id="Top10MOC">
+				<label for="Top10MOC"><span></span>Top 10 Market/Operator/Cell ID combinations</label><br>
+				<input type="radio" name="returnDateType" id="Top10IMSI">
+				<label for="Top10IMSI"><span></span>Top 10 IMSI occurences</label><br>
+			</div>
+		</div>
+		                    
+		<div id="searchIMSI" class="sidebar notSearch">			
+			<h3>IMSI Search</h3>
+			<p>IMSI:<br>
+			<select class="js-example-basic-multiple" id="SearchIMSI" style="width:100%"></select></p>		
+			<button onclick="searchIMSI()" class="btn btn-primary" type="button">Search</button>
+		</div>
+ 
+ 		<div id="searchIMSIAndDate" class="sidebar notSearch">
+			<h3>IMSI and Date Search</h3>			
+				<p>IMSI:<br>
+				<select class="js-example-basic-multiple" id="IMSIdateField" style="width:100%"></select></p>			
+		</div>
+
+		<div id="searchModelAndDate" class="sidebar notSearch">
+			<h3>Phone Model and Date Search</h3>
+			<form id="DateAndModelForm">
+				<p>Phone Manufacturer:
+				<select class="js-example-basic-multiple" id="ManufacturerField" style="width:100%" onchange="populatemodels(this)"></select></p>
+				<p>Phone Model:
+				<select class="js-example-basic-multiple" id="ModelField" style="width:100%"></select></p>
+			</form>
+		</div>						               
+	
+		<div id="searchCauseClass" class="sidebar notSearch">
+			<h3>Failure Class Search</h3>
+			<form id="IMSIForm">
+				<p>Failure Class:<br>			
+				<select class="form-control" id="SearchCauseClass" style="width:100%">
+					<option value="0">EMERGENCY</option>
+				 	<option value="1">HIGH PRIORITY ACCESS</option>
+					<option value="2">MT ACCESS</option>
+					<option value="3">MO SIGNALLING</option>	
+					<option value="4">MO DATA</option>	
+				</select></p>
+			</form>
+			<button onclick="searchCauseClass()" class="btn btn-primary" type="button">Search</button>
+		</div>	
+		
+		<div id="searchPhoneModel" class="sidebar notSearch">
+            <h3>Phone Model Search</h3>
+                <p>Phone Manufacturer:
+				<select class="js-example-basic-multiple" id="SearchPhoneManufacturer" style="width:100%" onchange="populatemodels(this)"></select></p>
+				
+				<p>Phone Model:
+				<select class="js-example-basic-multiple" id="SearchPhoneModel" style="width:100%"></select></p>
+            <button onclick="searchPhoneModel()" class="btn btn-primary" type="button">Search</button>
+        </div>		
+</div>
+	
+	
+	
+<!--TABLE section-->
+	<div id="mainheader">
+		<div id="searchDate" class="sidebar notSearch">	
+			<center><input id="FromDate" type="text" style="width:200px; margin-top: 10px" placeholder="From Date:"/> <input id="ToDate" type="text" style="width:200px" placeholder="To date:"/>
+			<button class="btn btn-primary" type="button" style="width:200px; margin-bottom:4px; height: 30px" id="datebtn">Search</button></center>			
+		
+		</div>
+	</div>
+    <div id="TableSection">
+        <table id ="Table" ></table>               
+    </div> 
+    <div id="chartSection">
+    	<center><button id="tenGraph" onclick="tenGraph()" style="visibility:hidden" class="btn btn-primary" type="button">GRAPH for 10</button></center>
+        <h3 id="graphTitle" style="align:center"></h3>
+        <canvas id="canvas" width="512" height="256"></canvas>
+    </div>
+   
+<!-- FOOTER -->
+	<div id="footer">Copyright &copy; Bits Don't Kill My Vibe<br></div>
+</div>
+</body>
+</html>
+

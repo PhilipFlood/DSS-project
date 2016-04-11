@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Admin Menu</title>
+
+	<!-- bootstrap dropdown -->
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="SearchStyle.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type="text/javascript" src="UserScripts.js"></script> 
+	<script type="text/javascript" src="AdminScripts.js"></script> 
+	
+	<!-- TABLES -->
+	<link rel="stylesheet"	href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+	<script type="text/javascript" 	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body onload="admincheck()">
+<div id="container">
+<!--header-->
+	<div id="header">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Ericsson_logo.svg/1135px-Ericsson_logo.svg.png" width="120" height="135" style="float:left;">
+		<!-- <center><img src="logo.PNG" height = "120px"></center>-->
+		<div id="userinfo">
+			<p id="loggedin"></p>
+			<p id="typeofuser">Administrator</p>
+			<a href="login.html" onclick="logout()">Logout</a>
+		</div>
+	</div>
+	
+	
+<!--sidebar-->
+	<div Id="sidebar">
+	
+	<div id="searchType" class="sidebar">
+		<h3>Admin Controls</h3>
+		<p><button onclick="DatasetButton()" class="btn btn-primary" type="button">Add dataset to database</button></p>
+		<p><button onclick="displayfailuredata()" class="btn btn-primary" type="button">view failed entries</button></p>
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">User Controls</button></p>
+
+	</div>
+
+	<div id="userControls" class="sidebar notSearch">
+		<h3>Change users</h3>
+		<p><button onclick="AddUserButton()" class="btn btn-primary" type="button">Add User</button></p>
+		<p><button onclick="DeleteUserButton()" class="btn btn-primary" type="button">Delete User</button></p>
+		<p><button onclick="EditUserButton()" class="btn btn-primary" type="button">Edit User</button></p>
+	</div>
+
+	<div id="edituser" class="sidebar notSearch">
+		<h3>Edit user</h3>
+		User to edit:
+		<input type="text" id="findusername">
+		<button name="data" type="button" onclick="finduser()" class="btn btn-primary">Find User</button>
+		<br/>		
+	</div>
+	
+	<div id="deleteuser" class="sidebar notSearch">
+		<H3>Delete user</H3>
+		Username:
+		<input type="text" id="name">
+		<br/>
+		<button name="data" type="button" onclick="deleteuser()" class="btn btn-primary">Delete user</button>		
+		
+	</div>
+	
+	
+</div>
+
+	<!-- MAIN SECTION -->
+	<div id="TableSection">
+		<h3 id="TableTitle" style="visibility: hidden"></h3>
+		<table id ="Table" class="table table-striped"></table>
+		<div id="mainsection">
+			<div id="uploadData" class="sidebar notSearch">
+				<h3>Upload Dataset</h3>		
+				File Path:
+				<input type="text" id="filepath">
+				<button onclick="upload()" class="btn btn-primary" type="button">Load data</button><br>
+			</div>
+			
+			<div id="edituserinfo" class="sidebar notSearch">	
+				<h4> </h4>
+				<H3>User Information</H3>
+				Username:
+				<input type="text" id="editusername">
+				<br/>
+				Password:
+				<input type="password" id="editpw">
+				<br/>
+				Role:
+		    	<select class="form-control" id="editlevel">
+				    <option value="0">Administrator</option>
+				    <option value="3">Network Management Engineer</option>
+				    <option value="2">Support Engineer</option>
+				    <option value="1">Customer Service Rep</option>
+			    </select>
+				<br/>
+				<button name="data" type="button" onclick="edituser()" class="btn btn-primary">Edit User</button>	
+				<p></p>
+				<button name="data" type="button" onclick="EditUserButton()" class="btn btn-primary">Back</button>
+			</div>
+			
+			<div id="createuser" class="sidebar notSearch">
+				<h3>Create user</h3>
+				Username:
+				<input type="text" id="username">
+				<br/>
+				Password:
+				<input type="password" id="pw">
+				<br/>
+				confirm Password:
+				<input type="password" id="confirm">
+				<br/>	
+				Role:
+			    <select class="form-control" id="userlevel">
+				    <option value="0">Administrator</option>
+					<option value="3">Network Management Engineer</option>
+					<option value="2">Support Engineer</option>
+				    <option value="1">Customer Service Rep</option>
+			    </select>
+				<br/>
+				<button name="data" type="button" onclick="adduser()" class="btn btn-primary">Add User</button>
+			</div>
+		</div>
+	</div>
+	
+	<div id="footer">Copyright &copy; Bits Don't Kill My Vibe<br></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<style type="text/css">
+
+	#ericssonLogo {
+		position: reflective;
+	}	
+
+	#ericssonLogo img {
+		position: absolute;
+		top: 7%;
+		left: 42%;
+	}
+
+	#path {
+		position: reflective;
+	}
+	
+	#path fieldset {
+		position: absolute;
+		top: 42%;
+		left: 38%;
+	}
+	
+	#search {
+		position: reflective;
+	}
+	
+	#search fieldset{
+		position: absolute;
+		top: 65%;
+		left: 38%;
+	}
+	
+	#login {
+		position: reflective;
+	}
+	
+	#login fieldset {
+		position: absolute;
+		text-align: center;
+		top: 42%;
+		left: 41%;
+		 
+	}
+	
+	h4{
+		padding-bottom: 0px;}
+
+	#info{
+		
+		
+		position : absolute;
+    	bottom : 0;
+    	height: 15%;
+    	left: 36%;
+	}
+	
+	#msg{
+	text-align: center;
+	color: red;
+	font-weight: bolder;
+	}
+	
+
+</style>

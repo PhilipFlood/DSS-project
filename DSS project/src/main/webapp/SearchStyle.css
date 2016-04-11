@@ -1,0 +1,187 @@
+.notSearch {
+	display: none;
+}
+.notUsed {
+	display: none;}
+
+body { margin:0;
+	  /*background-color: #003366;*/
+	  background: red; /* For browsers that do not support gradients */
+    background: -moz-linear-gradient(#003366, #FFFFFF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#003366, #FFFFFF); /* Standard syntax */}
+	  
+#container {border-radius: 25px;
+			background-color: #eeeeee;
+           font-family: Verdana, Arial, sans-serif; 
+           width: 80%;
+		   margin: auto;
+           min-width:850px;}
+			 
+#header {border-radius: 25px 25px 0px 0px;
+		color: rgb(179,89,0);
+        background-color: #eeeeee; 
+        border-bottom: 2px solid #ffffff;
+		text-align: Centre;
+        height: 140px;
+		background-position: center; 
+		background-repeat: no-repeat;
+        padding: 0 20px; 
+		margin-top: 50px;}
+	   
+#sidebar{ padding-left: 10px;
+		padding-right:10px;
+			float: left;
+          min-height:600px;
+          width: 23%;  
+		  height: 100%;
+		  color: #000000;
+		  background-color: #eeeeee;
+		  border-right: 2px solid #ffffff;}
+		  
+#TableSection, #chartSection, #mainheader { 
+          background-color: #eeeeee;
+          color: #000000;
+          float: left;
+          width: 77%;}
+		  
+#footer {font-size: .70em;
+        text-align: center;
+        color: #ffffff;
+        background-color: rgb(13,37,100);
+        padding-top: 10px;
+		padding-bottom: 10px;
+		clear: both;
+		border-radius: 0 0 10px 10px;
+		margin-bottom: 20px;} 
+		
+
+#userinfo{
+	color: #003366;
+	font-weight: bold;
+	float: right;
+	padding-top: 45px;
+	height: 50px;
+	width: 150px;
+	text-align: center;}
+		
+#mainsection{
+	width: 300px;
+	position: relative;
+	left: 30%;}
+
+#tenGraph{
+	width:300px;
+}
+	
+h1 {  margin-top: 0; 
+     font-size: 3em; 
+	 text-align: center;
+	 text-shadow: 2px 2px 2px #000000;
+	 padding-top: 35px;}
+	 
+#userinfo p{
+	margin-bottom: 0px;
+}
+
+#mainsection h3{ padding-bottom: 2px;
+				text-align: center;
+              border-bottom: 1px solid #000000;
+              margin: 10px;
+			  font-size: 2em;
+              color: #003366;
+			  position: center;
+              background-color: none; }
+
+#TableSection h3{ padding-bottom: 2px;
+				text-align: center;
+              border-bottom: 1px solid #000000;
+              width:300px;
+              margin: 10px;
+			  font-size: 2em;
+              color: #003366;
+			  position: center;
+              background-color: none; }         
+           
+#sidebar h3 { padding-bottom: 2px;
+			text-align: center;
+              border-bottom: 1px solid #000000;
+              margin: 10px;
+			  font-size: .90em;
+              color: #003366;
+			  position: center;
+              background-color: none; }
+
+/*TEXT BOXES*/
+input[type="text"], input[type="password"] {
+
+  margin: 0 0 5px 0;
+  width: 100%;
+  font-family: sans-serif;
+  font-size: 18px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+input[type="text"]:focus {
+  outline: none;
+}
+	 
+/*BUTTONS*/
+button { 
+    background-color: #003366; /* Green */
+    border: 1px #FFFFFF;
+    color: #FFFFFF;
+    padding: 5px;
+    margin: 0px 0px 5px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+   
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+	width: 100%;
+	border-radius: 10px;}
+
+button:hover {
+    background-color: #0038B8;
+    color: #FFFFFF;
+}
+	
+/*RADIO*/
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label {
+    color: #292321;
+    font-family:Arial, sans-serif;
+    font-size:15px;
+    margin-bottom: 5px;
+	
+}
+input[type="radio"] + label span {
+
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:4px 4px 4px 5px;
+    vertical-align:middle;
+    cursor:pointer;
+    -moz-border-radius:  50%;
+    border-radius:  50%;
+    
+}
+input[type="radio"] + label span {
+     background-color:#292321;
+}
+input[type="radio"]:checked + label span{
+     background-color:#0038B8;
+}
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+  -webkit-transition:background-color 0.4s linear;
+  -o-transition:background-color 0.4s linear;
+  -moz-transition:background-color 0.4s linear;
+  transition:background-color 0.4s linear;
+}

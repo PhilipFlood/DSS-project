@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
+
+	<title>Failed Data Entries</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/syntax/shCore.css">
+	<link rel="stylesheet" type="text/css" href="resources/demo.css">
+	<link rel="stylesheet" href="media/css/bootstrap-table.css">
+	<style type="text/css" class="init">
+
+	</style>
+	<script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
+	<script type="text/javascript" language="javascript" src="resources/syntax/shCore.js"></script>
+	<script type="text/javascript" language="javascript" src="resources/demo.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script src="media/js/bootstrap-table.js"></script>
+	<script type="text/javascript" src="media/js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" language="javascript" class="init">
+
+
+
+	</script>
+</head>
+
+<body>
+	<h2>Erroneous Data:</h2>
+	<table id="events" class="table tablesorter tablesorter-default table-striped table-bordered" data-toggle="table" data-url="rest/query/failureClass" data-height="800">
+    <thead>
+    <tr>
+        <th data-field="id">Entry No</th>
+        <th data-field="date">Date</th>
+        <th data-field="eventId">Event ID</th>
+        <th data-field="failureClass">Failure</th>
+        <th data-field="tac">TAC</th>
+        <th data-field="mcc">MCC</th>
+        <th data-field="mnc">MNC</th>
+        <th data-field="cellId">Cell ID</th>
+        <th data-field="duration">Duration</th>
+        <th data-field="causeCode">Cause Code</th>
+        <th data-field="neVersion">Ne Version</th>
+        <th data-field="imsi">IMSI</th>
+        <th data-field="hier3id">HIER3 ID</th>
+        <th data-field="hier32id">HIER32 ID</th>
+        <th data-field="hier321id">HIER321 ID</th>
+    </tr>
+    </thead>
+</table>
+<script>
+
+$(document).ready(function(){
+	$(function(){
+		$("#events").tablesorter();
+	});
+});
+
+    // client side
+    /* function responseHandler(res) {
+        return res.fclass;
+    } */
+
+
+</script>
+</body>
+</html>
