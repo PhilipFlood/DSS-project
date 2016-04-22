@@ -198,196 +198,83 @@ package entities;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity @Table(name="Events")
+@Entity @Table(name="Track")
 
-public class CopyOfEvent implements Serializable {
-	
+public class Track implements Serializable {
+		
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	@Column(name="trackID")private int trackID;
+	@Column(name="name") private String name;
+	@Column(name="artist") private String artist;
+	@Column(name="album") private String album;
+	@Column(name="genre") private String genre;	
 	
-	@Temporal(TemporalType.TIMESTAMP) @Column(name="Date") private Date date;
-	
-	@Column(name="Duration")private int duration;
-	@Column(name="CellID") private int cellId;
-	@Column(name="NE_Version") private String neVersion;
-	@Column(name="IMSI") private String imsi;
-	@Column(name="HIER3_ID") private String hier3id;
-	@Column(name="HIER32_ID") private String hier32id;
-	@Column(name="HIER321_ID")private String hier321id;
-	
-	
-	
+	@OneToMany(mappedBy="fclass")
+	//@JsonIgnore
+	private List <Event> events = new ArrayList<Event>() ;
+
 	@ManyToOne 
-	@JoinColumn(name="FailureClass", referencedColumnName="FailureClass", nullable = false)
+	@JoinColumn(name="PlaylistTrack", referencedColumnName="trackid", nullable = false)
 	//@JsonIgnore 
-	private FailureClass fclass;
+	private PlaylistTrack ptrack;
 	
 	
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="Cause_Code", referencedColumnName ="Cause_Code", nullable = false),
-		@JoinColumn(name="EventId" , referencedColumnName="EventId", nullable = false)
-	})
-	//@JsonIgnore 
-	private EventCause eventCause;
-	
-	
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="TAC", referencedColumnName ="TAC", nullable = false),
-	})
-	//@JsonIgnore 
-	private MobileType mobileType;
-	
-	
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="MCC", referencedColumnName ="MCC", nullable = false),
-		@JoinColumn(name="MNC" , referencedColumnName="MNC", nullable = false)
-	})
-	//@JsonIgnore 
-	private Network network;
+	public Track(){}
 
-
-	public CopyOfEvent(){
-		
-	}
-	
-
-
-	public CopyOfEvent(Date date, int duration, int cellId, String neVersion, String imsi, String hier3id, String hier32id,
-			String hier321id, FailureClass fclass, EventCause eventCause, MobileType mobileType, Network network) {
-
-		this.date = date;
-		this.duration = duration;
-		this.cellId = cellId;
-		this.neVersion = neVersion;
-		this.imsi = imsi;
-		this.hier3id = hier3id;
-		this.hier32id = hier32id;
-		this.hier321id = hier321id;
-		this.fclass = fclass;
-		this.eventCause = eventCause;
-		this.mobileType = mobileType;
-		this.network = network;
-	}
-	
-
-
-	public int getId() {
-		return id;
+	public Track(int trackid, String name, String artist, String album, String genre) {
+		super();
+		this.trackid = trackid;
+		this.name = name;
+		this.artist = artist;
+		this.album = album;
+		this.genre = genre;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getTrackid() {
+		return trackid;
 	}
 
-	public String getDate() {
-		DateFormat df = new SimpleDateFormat("yyy-mm-dd HH:MM:SS");
-		
-		return df.format(date);
+	public void setTrackid(int trackid) {
+		this.trackid = trackid;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public String getName() {
+		return name;
 	}
 
-	
-	public String getImsi() {
-		return imsi;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setImsi(String imsi) {
-		this.imsi = imsi;
+	public String getArtist() {
+		return artist;
 	}
 
-	public String getHier3id() {
-		return hier3id;
+	public void setArtist(String artist) {
+		this.artist = artist;
 	}
 
-	public void setHier3id(String hier3id) {
-		this.hier3id = hier3id;
+	public String getAlbum() {
+		return album;
 	}
 
-	public String getHier32id() {
-		return hier32id;
+	public void setAlbum(String album) {
+		this.album = album;
 	}
 
-	public void setHier32id(String hier32id) {
-		this.hier32id = hier32id;
+	public String getGenre() {
+		return genre;
 	}
 
-	public String getHier321id() {
-		return hier321id;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
-
-	public void setHier321id(String hier321id) {
-		this.hier321id = hier321id;
-	}
-
-	public FailureClass getFclass() {
-		return fclass;
-	}
-
-	public void setFclass(FailureClass fclass) {
-		this.fclass = fclass;
-	}
-	
-	public EventCause getEventCause() {
-		return eventCause;
-	}
-
-	public void setEventCause(EventCause eventCause) {
-		this.eventCause = eventCause;
-	}
-
-
-	public MobileType getMobileType() {
-		return mobileType;
-	}
-
-	public void setMobileType(MobileType mobileType) {
-		this.mobileType = mobileType;
-	}
-
-	public Network getNetwork() {
-		return network;
-	}
-
-	public void setNetwork(Network network) {
-		this.network = network;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		duration = duration;
-	}
-
-	public int getCellId() {
-		return cellId;
-	}
-
-	public void setCellId(int cellId) {
-		this.cellId = cellId;
-	}
-
-
-	public String getNeVersion() {
-		return neVersion;
-	}
-
-	public void setNeVersion(String neVersion) {
-		this.neVersion = neVersion;
-	}
-
 }

@@ -1,31 +1,30 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 	@Entity @Table(name="Users") 
 	public class User implements Serializable {
 		
 		@Id
-		@Column(name="Username")
-		private String username;
+		@Column(name="username")private String username;
+		@Column (name ="password")private String password;
 		
-		@Column (name ="Password")
-		private String password;
+		@OneToMany(mappedBy="user")
+		private List <Library> libraries = new ArrayList<Library>() ;
 		
-		@Column (name = "Usertype")
-		private int userType;
-
+		
 		public User(){}
-		
 		public User(String username, String password, int userType) {
 			this.username = username;
 			this.password = password;
-			this.userType = userType;
 		}
 
 		public String getUsername() {
@@ -42,13 +41,5 @@ import javax.persistence.Table;
 
 		public void setPassword(String password) {
 			this.password = password;
-		}
-
-		public int getUserType() {
-			return userType;
-		}
-
-		public void setUserType(int userType) {
-			this.userType = userType;
 		}
 }
