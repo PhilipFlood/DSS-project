@@ -10,36 +10,36 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-	@Entity @Table(name="Users") 
-	public class User implements Serializable {
-		
-		@Id
-		@Column(name="username")private String username;
-		@Column (name ="password")private String password;
-		
-		@OneToMany(mappedBy="user")
-		private List <Library> libraries = new ArrayList<Library>() ;
-		
-		
-		public User(){}
-		public User(String username, String password, int userType) {
-			this.username = username;
-			this.password = password;
-		}
+@Entity @Table(name="Users") 
+public class User implements Serializable {
 
-		public String getUsername() {
-			return username;
-		}
+	@Id
+	@Column(name="username")private String username;
+	@Column (name ="password")private String password;
 
-		public void setUsername(String username) {
-			this.username = username;
-		}
+	@OneToMany(mappedBy="user")
+	//@JsonIgnore
+	private List<Library> librarys = new ArrayList<Library>();
 
-		public String getPassword() {
-			return password;
-		}
+	public User(){}
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
