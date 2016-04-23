@@ -28,22 +28,12 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void deleteUser(User user) {
-
 		em.remove(em.contains(user) ? user : em.merge(user));
-
-	}
-
-	@Override
-	public Collection<User> getUserByType(int userType) {
-		Query query  = em.createQuery("from User where userType = :userType");
-		query.setParameter("userType", userType);
-		List<User> allUsersOfCertainType = query.getResultList();	
-		return allUsersOfCertainType;
 	}
 
 	@Override
 	public Collection<User> getAllUsers() {
-		Query query  = em.createQuery("select username, password, userType from User");
+		Query query  = em.createQuery("from User");
 		List<User> listOfAllUsers = query.getResultList();
 		return listOfAllUsers;
 	}
@@ -59,7 +49,4 @@ public class UserDAO implements IUserDAO {
 		}
 		return null;
 	}
-	
-	
-	
 }

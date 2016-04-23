@@ -6,9 +6,9 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import entities.User;
-import jpa.dao.IEventDAO;
 import jpa.dao.IUserDAO;
+import entities.User;
+
 
 @Local
 @Stateless
@@ -16,11 +16,7 @@ public class UserServiceEJB implements UserService {
 
 	@Inject
 	private IUserDAO userDao;
-	
-	public Collection<User> getUserByType(int userType) {
-		return userDao.getUserByType(userType);
-	}
-	
+		
 	public User getUserByName(String username) {
 		return userDao.getUserByName(username);
 	}

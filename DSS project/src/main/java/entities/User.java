@@ -1,5 +1,6 @@
 package entities;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity @Table(name="Users") 
 public class User implements Serializable {
 
@@ -17,10 +20,11 @@ public class User implements Serializable {
 	@Column(name="username")private String username;
 	@Column (name ="password")private String password;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="owner")
 	//@JsonIgnore
 	private List<Library> librarys = new ArrayList<Library>();
 
+	
 	public User(){}
 	public User(String username, String password) {
 		this.username = username;
@@ -41,5 +45,11 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<Library> getLibrarys() {
+		return librarys;
+	}
+	public void setLibrarys(List<Library> librarys) {
+		this.librarys = librarys;
 	}
 }

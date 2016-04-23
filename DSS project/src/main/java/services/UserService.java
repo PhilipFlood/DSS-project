@@ -12,7 +12,6 @@ public interface UserService {
 
 	abstract void addUser(User user);	
 	abstract void deleteUser(User user);	
-	abstract Collection<User> getUserByType(int userType);	
 	abstract Collection<User> getAllUsers();
 	abstract User getUserByName(String username);	
 }

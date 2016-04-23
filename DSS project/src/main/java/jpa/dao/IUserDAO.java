@@ -10,11 +10,8 @@ import entities.User;
 @Local
 @Stateless
 public interface IUserDAO {
-
 	void addUser(User user);
 	void deleteUser(User user);
-	Collection<User> getUserByType(int userType);
 	Collection<User> getAllUsers();
 	User getUserByName(String username);
-
 }
