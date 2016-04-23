@@ -1,0 +1,57 @@
+create database itunes;
+use itunes;
+
+drop database bdkmv;
+create database bdkmv;
+use bdkmv;
+
+drop table Users;
+drop table Library;
+drop table Track;
+drop table Playlist;
+drop table PlaylistTrack;
+
+create Table Users(
+username    		Varchar(20) primary key,
+password    		Varchar(20)
+);   
+
+
+create table Library(
+libraryID           int(6) primary key,
+persistanceID      	Varchar(20),
+username			Varchar(20)  not null
+);
+insert into Library values(1,"ASED1234", "philip");
+ 
+create table Playlist(
+playlistID          int(6) primary key,
+name      			Varchar(35),
+libraryID     		int(6) not null
+);
+
+insert into Playlist values(1,"newplaylist", 1);
+
+create table PlaylistTrack(
+Id              	int(6) primary key auto_increment,
+playlistID      	int(6)  not null,
+trackID     		int(6) not null
+);
+insert into PlaylistTrack values(1,1, 1);
+
+create table Track(
+trackID             int(6) primary key,
+name      			Varchar(35),
+artist     			Varchar(35),
+album      			Varchar(35),
+genre      			Varchar(35)
+);
+insert into Track values(1, "good kid","kendrick lamar", "GKMC", "hip-hop");
+
+
+
+insert into Users values("philip", "123");
+insert into Users values("john", "123");
+
+select * from Library;
+select * from Track;
