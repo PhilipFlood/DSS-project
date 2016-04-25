@@ -11,7 +11,7 @@ import entities.Library;;
 @Local
 public interface LibraryService {
 	
-	abstract List<Library> searchLibrary(int libraryID);
+	abstract List<Library> searchLibrary(String libraryID);
 	abstract Collection<Library> getAllLibrary();
 	abstract void addLibrary(ArrayList<Library> librariesTable);
 }

@@ -1,5 +1,6 @@
 package jpa.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -10,7 +11,7 @@ import entities.Track;
 @Local
 @Stateless
 public interface ITrackDAO {
-	void addTrack(Track Track);
+	void addTrack(ArrayList<Track> Track);
 	void deleteTrack(Track Track);
 	Collection<Track> getAllTracks();
 	Track getTrackByName(String Trackname);

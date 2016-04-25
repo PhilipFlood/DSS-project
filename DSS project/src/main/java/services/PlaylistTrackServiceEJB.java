@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -25,7 +26,7 @@ public class PlaylistTrackServiceEJB implements PlaylistTrackService {
 		return PlaylistTrackDao.getAllPlaylistTracks();
 	}
 
-	public void addPlaylistTrack(PlaylistTrack PlaylistTrack) {
+	public void addPlaylistTrack(ArrayList<PlaylistTrack> PlaylistTrack) {
 		PlaylistTrackDao.addPlaylistTrack(PlaylistTrack);		
 	}
 

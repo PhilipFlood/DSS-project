@@ -33,7 +33,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public Collection<User> getAllUsers() {
-		Query query  = em.createQuery("from User");
+		Query query  = em.createQuery("select username, password from User");
 		List<User> listOfAllUsers = query.getResultList();
 		return listOfAllUsers;
 	}

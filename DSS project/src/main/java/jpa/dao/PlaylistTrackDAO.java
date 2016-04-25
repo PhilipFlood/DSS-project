@@ -1,5 +1,6 @@
 package jpa.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entities.PlaylistTrack;
+import entities.Track;
 
 @Local
 @Stateless
@@ -22,8 +24,10 @@ public class PlaylistTrackDAO implements IPlaylistTrackDAO {
 	private EntityManager em;
 
 	@Override
-	public void addPlaylistTrack(PlaylistTrack PlaylistTrack) {
-		em.merge(PlaylistTrack);		
+	public void addPlaylistTrack(ArrayList<PlaylistTrack> PlaylistTracks) {
+		for (PlaylistTrack ptrack: PlaylistTracks){
+			em.merge(ptrack);
+		}		
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class PlaylistTrackDAO implements IPlaylistTrackDAO {
 
 	@Override
 	public Collection<PlaylistTrack> getAllPlaylistTracks() {
-		Query query  = em.createQuery("from PlaylistTrack");
+		Query query  = em.createQuery("select Id, playlist.playlistID , track.trackID from PlaylistTrack");
 		List<PlaylistTrack> listOfAllPlaylistTracks = query.getResultList();
 		return listOfAllPlaylistTracks;
 	}

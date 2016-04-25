@@ -15,8 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Library implements Serializable {	
 
 	@Id
-	@Column(name="libraryID") private int libraryID;
-	@Column(name="persistanceID") private String persistanceID;
+	@Column(name="libraryID") private String libraryID;
 
 	@ManyToOne 
 	@JoinColumn(name="username", referencedColumnName="username", nullable = false)
@@ -28,26 +27,18 @@ public class Library implements Serializable {
 
 	public Library(){}
 
-	public Library(int libraryID, String persistanceID) {
+	public Library(String libraryID) {
 		this.libraryID = libraryID;
-		this.persistanceID = persistanceID;
 	}
 
-	public int getLibraryID() {
+	public String getLibraryID() {
 		return libraryID;
 	}
 
-	public void setLibraryID(int libraryID) {
+	public void setLibraryID(String libraryID) {
 		this.libraryID = libraryID;
 	}
 
-	public String getPersistanceID() {
-		return persistanceID;
-	}
-
-	public void setPersistanceID(String persistanceID) {
-		this.persistanceID = persistanceID;
-	}
 	public User getUser() {
 		return owner;
 	}

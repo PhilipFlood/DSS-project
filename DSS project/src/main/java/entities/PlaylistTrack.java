@@ -26,8 +26,9 @@ public class PlaylistTrack implements Serializable {
 	
 	public PlaylistTrack(){}
 
-	public PlaylistTrack(int id) {
-		Id = id;
+	public PlaylistTrack(Track track, Playlist playlist) {
+		this.playlist = playlist;
+		this.track = track;
 	}
 
 	public int getId() {

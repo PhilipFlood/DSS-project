@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -25,7 +26,7 @@ public class TrackServiceEJB implements TrackService {
 		return TrackDao.getAllTracks();
 	}
 
-	public void addTrack(Track Track) {
+	public void addTrack(ArrayList<Track> Track) {
 		TrackDao.addTrack(Track);		
 	}
 

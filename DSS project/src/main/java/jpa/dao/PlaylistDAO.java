@@ -1,5 +1,6 @@
 package jpa.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import entities.Library;
 import entities.Playlist;
 
 @Local
@@ -22,8 +24,10 @@ public class PlaylistDAO implements IPlaylistDAO {
 	private EntityManager em;
 
 	@Override
-	public void addPlaylist(Playlist Playlist) {
-		em.merge(Playlist);		
+	public void addPlaylist(ArrayList<Playlist> playlists) {
+		for (Playlist playlist: playlists){
+			em.merge(playlist);
+		}	
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class PlaylistDAO implements IPlaylistDAO {
 
 	@Override
 	public Collection<Playlist> getAllPlaylists() {
-		Query query  = em.createQuery("from Playlist");
+		Query query  = em.createQuery("select playlistID, name, library.libraryID from Playlist");
 		List<Playlist> listOfAllPlaylists = query.getResultList();
 		return listOfAllPlaylists;
 	}

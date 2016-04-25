@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -25,7 +26,7 @@ public class PlaylistServiceEJB implements PlaylistService {
 		return PlaylistDao.getAllPlaylists();
 	}
 
-	public void addPlaylist(Playlist Playlist) {
+	public void addPlaylist(ArrayList<Playlist>  Playlist) {
 		PlaylistDao.addPlaylist(Playlist);		
 	}
 

@@ -17,7 +17,7 @@ public class LibraryServiceEJB implements LibraryService{
 	private ILibraryDAO libraryDAO;
 
 	@Override
-	public List<Library> searchLibrary(int libraryID) {
+	public List<Library> searchLibrary(String libraryID) {
 		return 	libraryDAO.searchLibrary(libraryID);
 	}
 

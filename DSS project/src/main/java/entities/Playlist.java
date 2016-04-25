@@ -19,8 +19,8 @@ public class Playlist implements Serializable {
 	@Column(name="name") private String name;
 	
 	@ManyToOne 
-	@JoinColumn(name="libraryID", referencedColumnName="libraryID", nullable = false)
-	//@JsonIgnore 
+	@JoinColumn(name="libraryID", referencedColumnName="libraryID")
+	//@JsonIgnore , nullable = false
 	private Library library;
 
 	@OneToMany(mappedBy="playlist")
