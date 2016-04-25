@@ -248,7 +248,7 @@ public class DataQuery {
 					allplaylisttrack.add(playlisttrack);
 				}
 				newplaylist.setPlaylistTracks(playlistTrackList);
-				//newplaylist.setLibrary(library);
+				newplaylist.setLibrary(library);
 				playlists.add(newplaylist);			
 			}
 			
@@ -263,22 +263,32 @@ public class DataQuery {
 				}
 				tracks.get(i).setTrackPlaylists(trackPlaylistList);
 			}
+	
+			//WRONG DIRECTION?S
+//			for(int i= 0;i<playlists.size();i++){
+//				playlists.get(i).setLibrary(library);
+//			}
 		
 			
-	
-			System.out.println(library);
-			System.out.println(playlists);
-			System.out.println(tracks);
-			System.out.println(allplaylisttrack);
+			User user = new User("jake", "123");
 			
-			ArrayList<Library> libraries = new ArrayList();
+			ArrayList<Library> libraries = new ArrayList<Library>();
+			library.setUser(user);
 			libraries.add(library);
 			
-			System.out.println("PERSISTING");
+			userService.addUser(user);
+			user.setLibrarys(libraries);
 			libraryService.addLibrary(libraries);
-			libraries.get(0).setPlaylists(playlists);
-						
+			userService.addUser(user);
+			
+			
+			
+			System.out.println("PERSISTING");
+			
+//					
 			playlistService.addPlaylist(playlists);
+			libraries.get(0).setPlaylists(playlists);
+			libraryService.addLibrary(libraries);
 //			
 			trackService.addTrack(tracks);
 //			
