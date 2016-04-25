@@ -18,40 +18,45 @@ password    		Varchar(20)
 
 
 create table Library(
-libraryID           int(6) primary key,
-persistanceID      	Varchar(20),
-username			Varchar(20)  not null
+libraryID           Varchar(40) primary key,
+username			Varchar(20)  
 );
-insert into Library values(1,"ASED1234", "philip");
+
  
 create table Playlist(
 playlistID          int(6) primary key,
-name      			Varchar(35),
-libraryID     		int(6) not null
+name      			Varchar(100),
+libraryID     		Varchar(40) 
 );
 
-insert into Playlist values(1,"newplaylist", 1);
 
 create table PlaylistTrack(
 Id              	int(6) primary key auto_increment,
-playlistID      	int(6)  not null,
-trackID     		int(6) not null
+playlistID      	int(6)  ,
+trackID     		int(6) 
 );
-insert into PlaylistTrack values(1,1, 1);
+
 
 create table Track(
 trackID             int(6) primary key,
-name      			Varchar(35),
-artist     			Varchar(35),
-album      			Varchar(35),
-genre      			Varchar(35)
+name      			Varchar(100),
+artist     			Varchar(100),
+album      			Varchar(100),
+genre      			Varchar(100)
 );
-insert into Track values(1, "good kid","kendrick lamar", "GKMC", "hip-hop");
 
 
 
 insert into Users values("philip", "123");
-insert into Users values("john", "123");
+insert into Users values("john", "456");
+insert into Library values("ASED1234", "jake");
+insert into Playlist values("newplaylist", 1);
+insert into PlaylistTrack values(1,1, 1);
+insert into Track values(1, "good kid","kendrick lamar", "GKMC", "hip-hop");
 
+
+select * from Users;
 select * from Library;
+select * from Playlist;
 select * from Track;
+select * from PlaylistTrack;
