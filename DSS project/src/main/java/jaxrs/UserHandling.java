@@ -24,7 +24,7 @@ import entities.Library;
 import entities.User;
 
 @Path("/users")
-public class UserManagementEnterprise {
+public class UserHandling {
 
 	@Inject 
 	private UserService userService;

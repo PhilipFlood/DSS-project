@@ -9,30 +9,9 @@ function authenticate(){
 			url : 'rest/users/authenticate',
 			data : JSON.stringify(fulluser) ,
 			success : function isSearchData(data) {
-				//alert(JSON.stringify(data));
+				alert(JSON.stringify(data));
 				localStorage.setItem("username",data.username);			
-				if(data.userType==0){								
-					localStorage.setItem("usertype",data.userType);					
-					window.location.assign("AdminMenu.html");
-				}
-				else if(data.userType==3){
-					localStorage.setItem("usertype",data.userType);	
-					window.location.assign("SearchMenu.html");
-				}
-				else if(data.userType==2){
-					localStorage.setItem("usertype",data.userType);					
-					window.location.assign("SearchMenu.html");
-				}
-				else if(data.userType==1){
-					localStorage.setItem("usertype",data.userType);					
-					window.location.assign("SearchMenu.html");
-				}
-				else if(data.userType==4){
-					//alert("Your username or password is incorrect");
-					document.getElementById('username').value = "";
-					document.getElementById('pw').value = "";
-					document.getElementById('msg').innerHTML = "Your username or password is incorrect!";						
-				}
+				//window.location.assign("SearchMenu.html");
 			},
 			contentType : 'application/json'
 		}); 	

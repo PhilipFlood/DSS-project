@@ -80,31 +80,7 @@ public class DataQuery {
 		return ptracks ;
 	}
 	
-//	@GET
-//	@Path("/persist")
-//	public void persist() {
-//		
-//		System.out.println("hello world");
-//		
-//		User user = new User("jake", "123");
-//		Library library = new Library("ASDF1234");
-//		
-//		ArrayList<Library> libraries = new ArrayList<Library>();
-//		library.setUser(user);
-//		libraries.add(library);
-//		
-//		
-//		userService.addUser(user);
-//		user.setLibrarys(libraries);
-//		libraryService.addLibrary(libraries);
-//		userService.addUser(user);
-//		
-//		Playlist playlist = new Playlist(1, "new playlist");
-//		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
-//
-//		libraries.get(0).setPlaylists(playlists);
-//		libraryService.addLibrary(libraries);
-//}
+
 	
 	@GET
 	@Path("/persist")

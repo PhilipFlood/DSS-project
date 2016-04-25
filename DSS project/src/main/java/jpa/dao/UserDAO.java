@@ -40,11 +40,15 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public User getUserByName(String username) {
-		Query query  = em.createQuery("from User where username = :username");
+		Query query  = em.createQuery("select password from User where username = :username");
 		query.setParameter("username", username);
-
+		
+		
 		if(query.getResultList().size()>0){
-			User user =  (User) query.getResultList().get(0);
+			List<String> listOfAllUsers = query.getResultList();
+			System.out.println(listOfAllUsers.get(0));
+
+			User user = new User(username, listOfAllUsers.get(0));
 			return user;
 		}
 		return null;

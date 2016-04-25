@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>BDKMV Login</title>
+	<title>Login</title>
 	
 	<!-- BOOTSTRAP -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
@@ -20,22 +20,37 @@
 </head>
 <body>
 	<div id="ericssonLogo">
-		<img src="http://cdn2.ubergizmo.com/wp-content/uploads/2012/11/Ericsson-logo.jpg" height="200" width="200">
+		<img src="http://icons.iconarchive.com/icons/cornmanthe3rd/metronome/512/Media-iTunes-icon.png" height="220" width="220">
 	</div>
 	
 <div>
 	<form id="login">
 		<fieldset><legend><h2>Login:</h2></legend>
-		<div class="form-group">	
+		<div class="form-group" id="loginform">	
 			<input type="text" id="username" class="form-control" placeholder="Username"><br>
 			<input type="password" id="pw" class="form-control" placeholder="password"><br>
-			<button name="data" type="button" onclick="authenticate()" class="btn btn-primary">Login</button>
+			<button name="data" type="button" onclick="authenticate()" class="btn btn-primary">Login</button><p></p>
+			<button type="button" onclick="()" class="btn btn-primary">Register</button>
 		</div>
+		<div id="createuser" class="sidebar notSearch">
+				<h3>Register</h3>
+				Username:
+				<input type="text" id="username">
+				<br/>
+				Password:
+				<input type="password" id="pw">
+				<br/>
+				confirm Password:
+				<input type="password" id="confirm">
+				<br/>
+				<button name="data" type="button" onclick="adduser()" class="btn btn-primary">Register</button>
+			</div>
 		</fieldset>
 	</form>
 </div>
 
 <div id="info"><p id="msg"></p></div>
+
 
 </body>
 </html>
