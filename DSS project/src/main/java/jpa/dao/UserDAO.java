@@ -46,8 +46,6 @@ public class UserDAO implements IUserDAO {
 		
 		if(query.getResultList().size()>0){
 			List<String> listOfAllUsers = query.getResultList();
-			System.out.println(listOfAllUsers.get(0));
-
 			User user = new User(username, listOfAllUsers.get(0));
 			return user;
 		}

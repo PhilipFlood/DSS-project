@@ -89,14 +89,12 @@ public class UserHandling {
 	@Produces(MediaType.APPLICATION_JSON)
 	public User AddUser(String user) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper objectMapper = new ObjectMapper();	
-		user = objectMapper.readValue(user, String.class);
-		
+		user = objectMapper.readValue(user, String.class);	
 		String username = user.split(" ")[0];
 		String password = user.split(" ")[1];
 		
-		
 		User newUser = new User(username, password);
-		
+
 		if(userService.getUserByName(username) != null){
 			User nullUser = new User("","");
 			return nullUser;

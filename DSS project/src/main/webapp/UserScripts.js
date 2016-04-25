@@ -10,11 +10,33 @@ function authenticate(){
 			data : JSON.stringify(fulluser) ,
 			success : function isSearchData(data) {
 				alert(JSON.stringify(data));
-				localStorage.setItem("username",data.username);			
-				//window.location.assign("SearchMenu.html");
+				if(data.username == ""){
+					localStorage.setItem("username",data.username);			
+					//window.location.assign("SearchMenu.html");
+				}
+				else{
+					alert("User or password is incorrect")
+				}
 			},
 			contentType : 'application/json'
 		}); 	
+}
+
+function loginform(){
+	document.getElementById('formtitle').innerHTML = "Login:";
+	$('#loginform').removeClass('notSearch');
+	$('#createuser').addClass('notSearch');
+	document.getElementById('username').value = "";
+	document.getElementById('pw').value = "";
+}
+
+function registerform(){
+	document.getElementById('formtitle').innerHTML = "Register:";
+	$('#createuser').removeClass('notSearch');
+	$('#loginform').addClass('notSearch');
+	document.getElementById('REGusername').value = "";
+	document.getElementById('REGpw').value = "";
+	document.getElementById('confirm').value = "";
 }
 
 function logout(){
@@ -23,49 +45,43 @@ function logout(){
 }
 
 function adduser(){
-		var userval = $( "#username" ).val();
-		var passval = $( "#pw" ).val();
-		var e = document.getElementById("userlevel");
-		var levelval = e.options[e.selectedIndex].value;
-		
-		var fulluser = userval + ' ' + passval + ' ' + levelval;
-		
-		if(passval.length == 0 || userval.length == 0 ||  $( "#confirm" ).val().length==0){
-			alert("You must fill in all fields");		
-		}
-		else if(passval != $( "#confirm" ).val()){
-			alert("passwords do not match");
-			document.getElementById('pw').value = "";
-			document.getElementById('confirm').value = "";
-		}
-		else if(userval.indexOf(" ") > 0 || passval.indexOf(" ") > 0){
-			alert("usernames and passwords cannot contain spaces");
-		}
-		else { 
-			$.ajax({
-				async: false,
-				type : 'POST',
-				url : 'rest/users/adduser',
-				data : JSON.stringify(fulluser) ,
-				success : function isSearchData(data) {
-					clearTable();
-					displayusers();
-					if(data.userType==4){
-						alert("user already exists");	
-					}
-					else{									
-					
-					$('#createuser').addClass('notSearch');
-					document.getElementById('username').value = "";
-					document.getElementById('userlevel').value = "";
-					document.getElementById('pw').value = "";
+	var userval = $( "#REGusername" ).val();
+	var passval = $( "#REGpw" ).val();
+	var fulluser = userval + ' ' + passval;
+	
+	if(passval.length == 0 || userval.length == 0 ||  $( "#confirm" ).val().length==0){
+		alert("You must fill in all fields");		
+	}
+	else if(passval != $( "#confirm" ).val()){
+		alert("passwords do not match");
+		document.getElementById('REGpw').value = "";
+		document.getElementById('confirm').value = "";
+	}
+	else if(userval.indexOf(" ") > -1 || passval.indexOf(" ") > -1){
+		alert("usernames and passwords cannot contain spaces");
+	}
+	else { 
+		$.ajax({
+			async: false,
+			type : 'POST',
+			url : 'rest/users/adduser',
+			data : JSON.stringify(fulluser) ,
+			success : function isSearchData(data){
+				if(data.username == ""){
+					alert("user already exists");	
+					document.getElementById("REGusername").focus();
+				}
+				else{				
+					alert("You have been registered!");
+					document.getElementById('REGusername').value = "";
+					document.getElementById('REGpw').value = "";
 					document.getElementById('confirm').value = "";
-					//alert("User Created!");
-					}
-				},
-				contentType : 'application/json'
-			 }); 
-		}	
+					loginform()
+				}
+			},
+			contentType : 'application/json'
+		 }); 
+	}	
 }
 
 function deleteuser(){
@@ -154,60 +170,6 @@ function edituser(){
 		},
 		contentType : 'application/json'
 	 });
-}
-
-function displayusers(){
-    var restUrl = "rest/users/allUsers";
-    var json = (function () {
-        var json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': restUrl,
-            'dataType': "json",
-            'success': function (data) {
-                json = data;
-            }
-        });
-        return json;
-    })();
-    var table = document.getElementById("Table");
-    var row = table.insertRow(0);
-    var eventId = document.createElement('th');
-    var causeCode = document.createElement('th');
-    var description = document.createElement('th');
-    row.appendChild(eventId);
-    row.appendChild(causeCode);
-    row.appendChild(description);
-    eventId.innerHTML = "UserName";
-    causeCode.innerHTML = "Password";
-    description.innerHTML = "User Type";
-    if(json != null && json.length != 0) {
-        var str = json.toString();
-        var arrayOfElements = str.split(',');
-        var arrayLength = arrayOfElements.length;
-        var i = 0;
-        var numRows = 1;
-        while ( i < arrayLength) {
-            var rowNum = table.insertRow(numRows);
-            var col1 = document.createElement('td');
-            var col2 = document.createElement('td');
-            var col3 = document.createElement('td');
-            rowNum.appendChild(col1);
-            rowNum.appendChild(col2);
-            rowNum.appendChild(col3);
-            col1.innerHTML = arrayOfElements[i];
-            i++;
-            col2.innerHTML = arrayOfElements[i];
-            i++;
-            col3.innerHTML = arrayOfElements[i];
-            i++;
-            numRows++;
-        }
-    }
-    else {
-        alert("Result not found.");
-    }
 }
 
 /*function clearTable() {

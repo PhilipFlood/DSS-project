@@ -25,26 +25,20 @@
 	
 <div>
 	<form id="login">
-		<fieldset><legend><h2>Login:</h2></legend>
+		<fieldset><legend><h2 id="formtitle">Login:</h2></legend>
 		<div class="form-group" id="loginform">	
 			<input type="text" id="username" class="form-control" placeholder="Username"><br>
 			<input type="password" id="pw" class="form-control" placeholder="password"><br>
 			<button name="data" type="button" onclick="authenticate()" class="btn btn-primary">Login</button><p></p>
-			<button type="button" onclick="()" class="btn btn-primary">Register</button>
+			<button type="button" onclick="registerform()" class="btn btn-primary">Register</button>
 		</div>
 		<div id="createuser" class="sidebar notSearch">
-				<h3>Register</h3>
-				Username:
-				<input type="text" id="username">
-				<br/>
-				Password:
-				<input type="password" id="pw">
-				<br/>
-				confirm Password:
-				<input type="password" id="confirm">
-				<br/>
-				<button name="data" type="button" onclick="adduser()" class="btn btn-primary">Register</button>
-			</div>
+			<input type="text" id="REGusername" class="form-control" placeholder="Username"><br>
+			<input type="password" id="REGpw" class="form-control" placeholder="password"><br>
+			<input type="password" id="confirm" class="form-control" placeholder="confirm password"><br>
+			<button name="data" type="button" onclick="adduser()" class="btn btn-primary">Register</button><p></p>
+			<button type="button" onclick="loginform()" class="btn btn-primary">Back</button>
+		</div>
 		</fieldset>
 	</form>
 </div>
