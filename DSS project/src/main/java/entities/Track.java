@@ -22,7 +22,7 @@ public class Track implements Serializable {
 	@Column(name="album") private String album;
 	@Column(name="genre") private String genre;	
 	
-	@OneToMany(mappedBy="track")
+	@OneToMany(mappedBy="track", orphanRemoval=true)
 	//@JsonIgnore
 	private List<PlaylistTrack> trackPlaylists = new ArrayList<PlaylistTrack>();
 	

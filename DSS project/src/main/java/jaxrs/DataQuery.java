@@ -96,7 +96,7 @@ public class DataQuery {
 			Array playlistarr = null;
 			
 			//main funct
-			File file = new File("/home/shanu/DSS project/DSS project/iTunes Music Library3.xml");  
+			File file = new File("/home/shanu/git/DSS-project/DSS project/iTunes Music Library1.xml");  
 			JAXBContext jaxbContext = JAXBContext.newInstance(Plist.class);  
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
 			Plist plist = (Plist) jaxbUnmarshaller.unmarshal(file);  			//main data construct
@@ -239,14 +239,9 @@ public class DataQuery {
 				}
 				tracks.get(i).setTrackPlaylists(trackPlaylistList);
 			}
-	
-			//WRONG DIRECTION?S
-//			for(int i= 0;i<playlists.size();i++){
-//				playlists.get(i).setLibrary(library);
-//			}
 		
 			
-			User user = new User("bigP", "123");
+			User user = new User("Kevin", "123");
 			
 			ArrayList<Library> libraries = new ArrayList<Library>();
 			library.setUser(user);
@@ -260,16 +255,16 @@ public class DataQuery {
 			
 			
 			System.out.println("PERSISTING");
-			
-//					
+							
 			playlistService.addPlaylist(playlists);
 			libraries.get(0).setPlaylists(playlists);
 			libraryService.addLibrary(libraries);
 //			
 			trackService.addTrack(tracks);
 //			
+			System.out.println("BEFORE PLAYLIST TRACK REL");
 			playlistTrackService.addPlaylistTrack(allplaylisttrack);
-			
+			System.out.println("FINISHED");
 		} 
 		catch (JAXBException e) {  
 			e.printStackTrace();  
@@ -286,6 +281,14 @@ public class DataQuery {
 		return null;
 	}
 	
+	@GET
+	@Path("/deletplaylist")
+	public Collection<PlaylistTrack> deleteplaylist() {
+		Playlist newplay = playlistService.getPlaylistByName("LIBRERIA");
+		
+		playlistService.deletePlaylist(newplay);
+		return null ;
+	}
 	
 	
 //	@GET

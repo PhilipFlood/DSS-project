@@ -23,7 +23,7 @@ public class Playlist implements Serializable {
 	//@JsonIgnore , nullable = false
 	private Library library;
 
-	@OneToMany(mappedBy="playlist")
+	@OneToMany(mappedBy="playlist", orphanRemoval=true)
 	//@JsonIgnore
 	private List<PlaylistTrack> playlistTracks = new ArrayList<PlaylistTrack>();
 	

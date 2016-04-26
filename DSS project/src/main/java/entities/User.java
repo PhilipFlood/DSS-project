@@ -20,7 +20,7 @@ public class User implements Serializable {
 	@Column(name="username")private String username;
 	@Column (name ="password")private String password;
 
-	@OneToMany(mappedBy="owner")
+	@OneToMany(mappedBy="owner", orphanRemoval=true)
 	//@JsonIgnore
 	private List<Library> librarys = new ArrayList<Library>();
 

@@ -21,7 +21,7 @@ public class Library implements Serializable {
 	@JoinColumn(name="username", referencedColumnName="username", nullable = false)
 	private User owner;
 	
-	@OneToMany(mappedBy="library")
+	@OneToMany(mappedBy="library", orphanRemoval=true)
 	//@JsonIgnore
 	private List<Playlist> playlists = new ArrayList<Playlist>();
 

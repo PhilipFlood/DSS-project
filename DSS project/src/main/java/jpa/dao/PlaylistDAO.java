@@ -44,7 +44,7 @@ public class PlaylistDAO implements IPlaylistDAO {
 	
 	@Override
 	public Playlist getPlaylistByName(String Playlistname) {
-		Query query  = em.createQuery("from Playlist where Playlistname = :Playlistname");
+		Query query  = em.createQuery("from Playlist where name = :Playlistname");
 		query.setParameter("Playlistname", Playlistname);
 
 		if(query.getResultList().size()>0){
