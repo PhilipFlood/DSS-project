@@ -12,7 +12,7 @@ import entities.Library;;
 @Local
 @Stateless
 public interface ILibraryDAO {
-	List<Library> searchLibrary(String libraryID);
+	List<Library> searchLibrary(String username);
 	abstract void addLibrary(ArrayList<Library> library);
 	Collection<Library> getAllLibrary();
 }

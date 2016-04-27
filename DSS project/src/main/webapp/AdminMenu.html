@@ -28,7 +28,6 @@
 		<!-- <center><img src="logo.PNG" height = "120px"></center>-->
 		<div id="userinfo">
 			<p id="loggedin"></p>
-			<p id="typeofuser">Administrator</p>
 			<a href="login.html" onclick="logout()">Logout</a>
 		</div>
 	</div>
@@ -39,10 +38,21 @@
 	
 	<div id="searchType" class="sidebar">
 		<h3>Admin Controls</h3>
-		<p><button onclick="DatasetButton()" class="btn btn-primary" type="button">Add dataset to database</button></p>
-		<p><button onclick="displayfailuredata()" class="btn btn-primary" type="button">view failed entries</button></p>
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">User Controls</button></p>
-
+		<p><button onclick="DatasetButton()" class="btn btn-primary" type="button">Backup iTunes Library</button></p>
+		<p><button onclick="displayLibraries()" class="btn btn-primary" type="button">View all Libraries</button></p>
+<!--  																-> FROM HERE CLICK ON LIBRARY -> "VIEW/EDIT LIBRARY" AND "DELETE" BTN SHOWS
+																	BRING TO LIST OF PLAYLISTS IN LIBRARY -> CLICK ON ONE -> "CHANGE/VIEW PLIST" AND "DELETE PLAYLIST"
+																	SHOW ALL TRACKS IN PLAYLIST -> CLICK ON ONE TRACK -> "MOVE POSITION" "DELETE FROM PLAYLIST" "MOVE TO OTHER PLAYLIST"
+		
+		
+		
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">playlist controls</button></p>
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">View tracks</button></p>
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">move track</button></p>
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">delete account</button></p>-->
+		
+		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">Delete account</button></p>
+				<!-- ARE YOU SURE? WILL DELETE YOUR ACCOUNT AND ALL LIBRARIES YOU HAVE UPLOADED -> BRING TO LOGIN -->
 	</div>
 
 	<div id="userControls" class="sidebar notSearch">
@@ -68,8 +78,6 @@
 		<button name="data" type="button" onclick="deleteuser()" class="btn btn-primary">Delete user</button>		
 		
 	</div>
-	
-	
 </div>
 
 	<!-- MAIN SECTION -->
@@ -78,9 +86,9 @@
 		<table id ="Table" class="table table-striped"></table>
 		<div id="mainsection">
 			<div id="uploadData" class="sidebar notSearch">
-				<h3>Upload Dataset</h3>		
-				File Path:
-				<input type="text" id="filepath">
+				<h3>Upload Library</h3>		
+				<p>.xml Library file:</p>
+				<input type="file" id="filepath" placeholder="XML FILE"><p></p>
 				<button onclick="upload()" class="btn btn-primary" type="button">Load data</button><br>
 			</div>
 			

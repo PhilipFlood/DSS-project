@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
@@ -80,11 +81,10 @@ public class DataQuery {
 		return ptracks ;
 	}
 	
-
-	
 	@GET
-	@Path("/persist")
-	public void persist() {
+	@Path("/persist/{username}/{filename}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void persist(@PathParam("username") String username ,@PathParam("filename")String filename) {
 		 Library library = new Library();
 		 ArrayList<Playlist> playlists = new ArrayList<Playlist>();
 		 ArrayList<Track> tracks = new ArrayList<Track>();
@@ -96,7 +96,7 @@ public class DataQuery {
 			Array playlistarr = null;
 			
 			//main funct
-			File file = new File("/home/shanu/git/DSS-project/DSS project/iTunes Music Library1.xml");  
+			File file = new File("/home/shanu/Desktop/"+filename);  
 			JAXBContext jaxbContext = JAXBContext.newInstance(Plist.class);  
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
 			Plist plist = (Plist) jaxbUnmarshaller.unmarshal(file);  			//main data construct
@@ -241,7 +241,8 @@ public class DataQuery {
 			}
 		
 			
-			User user = new User("Kevin", "123");
+			//User user = new User("Kevin", "123");
+			User user = userService.getUserByName(username);
 			
 			ArrayList<Library> libraries = new ArrayList<Library>();
 			library.setUser(user);
@@ -271,7 +272,6 @@ public class DataQuery {
 		}  
 		
 	}
-	
 	public static Track getTrack(int trackID, ArrayList<Track> tracks){
 		for(int i=0;i<tracks.size();i++)
 			if(tracks.get(i).getTrackID() == trackID){
@@ -282,7 +282,7 @@ public class DataQuery {
 	}
 	
 	@GET
-	@Path("/deletplaylist")
+	@Path("/deleteplaylist")
 	public Collection<PlaylistTrack> deleteplaylist() {
 		Playlist newplay = playlistService.getPlaylistByName("LIBRERIA");
 		
@@ -290,6 +290,13 @@ public class DataQuery {
 		return null ;
 	}
 	
+	@GET
+	@Path("/searchLibrary/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Library> searchEventCauseByIMSI(@PathParam("username") String username){
+		System.out.println(username);
+		return libraryService.searchLibrary(username);
+	}
 	
 //	@GET
 //	@Path("/allevents")

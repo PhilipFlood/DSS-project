@@ -22,9 +22,9 @@ public class LibraryDAO implements ILibraryDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Library> searchLibrary(String libraryID){
-		Query query  = em.createQuery("from Library where libraryID = :library");
-		query.setParameter("library", libraryID);
+	public List<Library> searchLibrary(String username){
+		Query query  = em.createQuery("select libraryID from Library where owner.username = :username");
+		query.setParameter("username", username);
 		List<Library> result = query.getResultList();
 		return result;
 	}

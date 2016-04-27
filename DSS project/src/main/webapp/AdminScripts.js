@@ -1,31 +1,27 @@
 var tableexists = false;
 
 function upload() {
-	var x = document.getElementById("filepath").value;
-	alert(x);
+	clearTable();
+	var filename = document.getElementById("filepath").value;
+	var username = localStorage.getItem("username")
+	var restUrl = "rest/query/persist/" + username + "/" + filename;
+	
 	$.ajax({
-			type : 'POST',
-			url : 'rest/load',
-			data:JSON.stringify(x),
-		
-			success : handlePost,
-			contentType : 'application/json'
-	});
-	//window.location="http://localhost:8080/EventManager1/failed.html";
-	displayfailuredata();
-}
-
-function handlePost(){
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+            alert("your library has been uploaded")
+        }
+    });
 	
 }
 
 function admincheck(){
-	var level = localStorage.getItem('usertype');
-	document.getElementById('loggedin').innerHTML = localStorage.getItem("username");	
-	if(level > 0 && level < 4){
-		window.location.assign("SearchMenu.html");
-    }
-	else if(level < 0 || level >3){
+	var uname = localStorage.getItem("username")
+	document.getElementById('loggedin').innerHTML = uname
+	if(uname == ""){
 		window.location.assign("login.html");
 	}
 }
@@ -82,6 +78,115 @@ function DeleteUserButton(){
 	$('#edituser').addClass('notSearch');
 	$('#edituserinfo').addClass('notSearch');
 	$('#deleteuser').removeClass('notSearch');
+}
+
+function displayLibraries(){
+	document.getElementById("TableTitle").innerHTML = "Libraries:";
+	document.getElementById("TableTitle").style.visibility = "visible"
+	var username = localStorage.getItem("username");
+		
+    var restUrl = "rest/query/searchLibrary/"+username
+    
+    alert(restUrl)
+    var json = (function () {
+        var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': restUrl,
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+    })();
+    var table = document.getElementById("Table");
+    var header = table.createTHead();
+    var row = header.insertRow(0);
+    var tBody = document.createElement("tbody");
+    table.appendChild (tBody); 
+    
+    var LibraryID = document.createElement('th');
+    row.appendChild(LibraryID);
+    LibraryID.innerHTML = "Library ID";
+    if(json != null && json.length != 0) {
+        var str = json.toString();
+        var arrayOfElements = str.split(',');
+        var arrayLength = arrayOfElements.length;
+        var i = 0;
+        var numRows = 0;
+        while ( i < arrayLength) {
+        	var rowNum = tBody.insertRow(numRows);
+            var col1 = document.createElement('td');
+            rowNum.appendChild(col1);
+            col1.innerHTML = arrayOfElements[i];
+            i++;
+            numRows++;
+        }
+        $('#Table').dataTable(); 
+        tableexists = true;
+    }
+    else {
+        alert("Result not found.");
+    }
+}
+
+/*function displayLibraries(){
+	document.getElementById("TableTitle").innerHTML = "Libraries:";
+	document.getElementById("TableTitle").style.visibility = "visible"
+    var restUrl = "rest/query/allLibraries";
+    var json = (function () {
+        var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': restUrl,
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+    })();
+    var table = document.getElementById("Table");
+    var header = table.createTHead();
+    var row = header.insertRow(0);
+    var tBody = document.createElement("tbody");
+    table.appendChild (tBody); 
+    
+    var LibraryID = document.createElement('th');
+    row.appendChild(LibraryID);
+    LibraryID.innerHTML = "Library ID";
+    if(json != null && json.length != 0) {
+        var str = json.toString();
+        var arrayOfElements = str.split(',');
+        var arrayLength = arrayOfElements.length;
+        var i = 0;
+        var numRows = 0;
+        while ( i < arrayLength) {
+        	var rowNum = tBody.insertRow(numRows);
+            var col1 = document.createElement('td');
+            rowNum.appendChild(col1);
+            col1.innerHTML = arrayOfElements[i];
+            i++;
+            i++;
+            numRows++;
+        }
+        $('#Table').dataTable(); 
+        tableexists = true;
+    }
+    else {
+        alert("Result not found.");
+    }
+}*/
+
+function displayLibraryPlaylists(){
+	
+}
+
+function displayPlaylistTracks(){
+	
 }
 
 function displayusers(){

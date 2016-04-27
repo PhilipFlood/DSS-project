@@ -10,9 +10,9 @@ function authenticate(){
 			data : JSON.stringify(fulluser) ,
 			success : function isSearchData(data) {
 				alert(JSON.stringify(data));
-				if(data.username == ""){
+				if(data.username != ""){
 					localStorage.setItem("username",data.username);			
-					//window.location.assign("SearchMenu.html");
+					window.location.assign("AdminMenu.html");
 				}
 				else{
 					alert("User or password is incorrect")
@@ -40,7 +40,7 @@ function registerform(){
 }
 
 function logout(){
-	localStorage.setItem("usertype",5);		
+	localStorage.setItem("username","");		
 	window.location.assign("login.html");
 }
 

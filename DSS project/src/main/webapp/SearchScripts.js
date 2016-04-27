@@ -777,7 +777,7 @@ function clearFields() {
     document.getElementById("IMSIForm").reset();
 }
 
-function checkAccessLevel() {
+/*function checkAccessLevel() {
 	document.getElementById('loggedin').innerHTML = localStorage.getItem("username");
 	var level = localStorage.getItem('usertype');
 	if(level == 1){
@@ -795,7 +795,7 @@ function checkAccessLevel() {
     else{
     	window.location.assign("login.html");   	
     }
-}
+}*/
 
 $(function() {
     var allImsi = (function () {
