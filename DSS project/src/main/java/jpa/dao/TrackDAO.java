@@ -53,4 +53,11 @@ public class TrackDAO implements ITrackDAO {
 		}
 		return null;
 	}
+	
+	public List<Track> searchPlaylistTracks(int playlist){
+		Query query  = em.createQuery("select track.trackID, track.name, track.artist, track.album, track.genre from PlaylistTrack where playlist.playlistID = :playlist");
+		query.setParameter("playlist", playlist);
+		List<Track> result = query.getResultList();
+		return result;
+	}
 }

@@ -1,5 +1,10 @@
 var tableexists = false;
+var selectedLibraryID;
+var selectedPlaylistID;
+var selectedTrackID;
+var selectedRow;
 
+//upload library
 function upload() {
 	clearTable();
 	var filename = document.getElementById("filepath").value;
@@ -18,6 +23,7 @@ function upload() {
 	
 }
 
+//get user that's logged in
 function admincheck(){
 	var uname = localStorage.getItem("username")
 	document.getElementById('loggedin').innerHTML = uname
@@ -26,68 +32,53 @@ function admincheck(){
 	}
 }
 
-function DatasetButton() {
-		$('#uploadData').removeClass('notSearch');
-		$('#userControls').addClass('notSearch');
-		$('#createuser').addClass('notSearch');
-		$('#edituser').addClass('notSearch');
-		$('#edituserinfo').addClass('notSearch');
-		$('#deleteuser').addClass('notSearch');
-		clearTable();
-		document.getElementById('msg').innerHTML = "";
-}
-
-function UserFunctionsButton(){
-		$('#uploadData').addClass('notSearch');
-		$('#userControls').removeClass('notSearch');
-		$('#createuser').addClass('notSearch');
-		$('#edituser').addClass('notSearch');
-		$('#edituserinfo').addClass('notSearch');
-		$('#deleteuser').addClass('notSearch');
-		clearTable();
-		displayusers();
-}
-
-function AddUserButton(){
-		clearTable();
-		$('#uploadData').addClass('notSearch');
-		$('#userControls').removeClass('notSearch');
-		$('#createuser').removeClass('notSearch');
-		$('#edituser').addClass('notSearch');
-		$('#edituserinfo').addClass('notSearch');
-		$('#deleteuser').addClass('notSearch');
-}
-
-function EditUserButton(){
+//navigation 
+function clearMain(){
 	clearTable();
-	displayusers();
+	document.getElementById("TableTitle").style.visibility = "hidden"
 	$('#uploadData').addClass('notSearch');
-	$('#userControls').removeClass('notSearch');
-	$('#createuser').addClass('notSearch');
-	$('#edituser').removeClass('notSearch');
-	$('#deleteuser').addClass('notSearch');
-	$('#edituserinfo').addClass('notSearch');
+	$('#librarybtns').addClass('notSearch');
+	$('#playlistbtns').addClass('notSearch');
+	$('#trackbtns').addClass('notSearch');
 }
-
+function DatasetButton() {
+	clearTable();
+	$('#uploadData').removeClass('notSearch');
+	$('#librarybtns').addClass('notSearch');
+	$('#playlistbtns').addClass('notSearch');
+	$('#trackbtns').addClass('notSearch');
+}
 function DeleteUserButton(){
 	clearTable();
-	displayusers();
 	$('#uploadData').addClass('notSearch');
-	$('#userControls').removeClass('notSearch');
-	$('#createuser').addClass('notSearch');
-	$('#edituser').addClass('notSearch');
-	$('#edituserinfo').addClass('notSearch');
-	$('#deleteuser').removeClass('notSearch');
+	$('#librarybtns').addClass('notSearch');
+	$('#playlistbtns').addClass('notSearch');
+	$('#trackbtns').addClass('notSearch');
+}
+function librarybtn(){
+	$('#librarybtns').removeClass('notSearch');
+	$('#playlistbtns').addClass('notSearch');
+	$('#trackbtns').addClass('notSearch');
+}
+function playlistbtn(){
+	$('#librarybtns').addClass('notSearch');
+	$('#playlistbtns').removeClass('notSearch');
+	$('#trackbtns').addClass('notSearch');
+}
+function trackbtn(){
+	$('#librarybtns').addClass('notSearch');
+	$('#playlistbtns').addClass('notSearch');
+	$('#trackbtns').removeClass('notSearch');
 }
 
+//DISPLAYING TABLES
 function displayLibraries(){
+	clearMain()
 	document.getElementById("TableTitle").innerHTML = "Libraries:";
 	document.getElementById("TableTitle").style.visibility = "visible"
 	var username = localStorage.getItem("username");
-		
     var restUrl = "rest/query/searchLibrary/"+username
-    
-    alert(restUrl)
+   
     var json = (function () {
         var json = null;
         $.ajax({
@@ -101,41 +92,55 @@ function displayLibraries(){
         });
         return json;
     })();
-    var table = document.getElementById("Table");
-    var header = table.createTHead();
-    var row = header.insertRow(0);
-    var tBody = document.createElement("tbody");
-    table.appendChild (tBody); 
     
-    var LibraryID = document.createElement('th');
-    row.appendChild(LibraryID);
-    LibraryID.innerHTML = "Library ID";
     if(json != null && json.length != 0) {
-        var str = json.toString();
-        var arrayOfElements = str.split(',');
-        var arrayLength = arrayOfElements.length;
+    	
+    	var table = document.getElementById("Table");
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        var tBody = document.createElement("tbody");
+        table.appendChild (tBody); 
+        
+        var LibraryID = document.createElement('th');
+        row.appendChild(LibraryID);
+        LibraryID.innerHTML = "Library ID";
+    	
+
         var i = 0;
         var numRows = 0;
-        while ( i < arrayLength) {
+        while ( i < json.length) {
         	var rowNum = tBody.insertRow(numRows);
             var col1 = document.createElement('td');
             rowNum.appendChild(col1);
-            col1.innerHTML = arrayOfElements[i];
+            col1.innerHTML = json[i];
             i++;
             numRows++;
         }
-        $('#Table').dataTable(); 
-        tableexists = true;
+        $('#Table').dataTable();         
+        $('#Table tbody').on( 'click', 'tr', function () {
+        	selectedLibraryID = this.cells[0].innerHTML
+        	//alert(selectedLibraryID)
+        	if(selectedRow != null){
+        		selectedRow.style.backgroundColor = "transparent"
+        	}
+        	this.style.backgroundColor = "#B0BED9"
+            selectedRow = this
+            librarybtn();
+        } );  
     }
     else {
-        alert("Result not found.");
+        alert("Library not found.");
+        $('#Table').dataTable();
     }
 }
 
-/*function displayLibraries(){
-	document.getElementById("TableTitle").innerHTML = "Libraries:";
+function displayPlaylists(){
+	clearMain()
+	document.getElementById("TableTitle").innerHTML = "Playlists in "+ selectedLibraryID+":";
 	document.getElementById("TableTitle").style.visibility = "visible"
-    var restUrl = "rest/query/allLibraries";
+	var restUrl = "rest/query/searchPlaylists/"+selectedLibraryID
+   
+    //alert(restUrl)
     var json = (function () {
         var json = null;
         $.ajax({
@@ -149,50 +154,59 @@ function displayLibraries(){
         });
         return json;
     })();
-    var table = document.getElementById("Table");
-    var header = table.createTHead();
-    var row = header.insertRow(0);
-    var tBody = document.createElement("tbody");
-    table.appendChild (tBody); 
     
-    var LibraryID = document.createElement('th');
-    row.appendChild(LibraryID);
-    LibraryID.innerHTML = "Library ID";
+    
     if(json != null && json.length != 0) {
-        var str = json.toString();
-        var arrayOfElements = str.split(',');
-        var arrayLength = arrayOfElements.length;
+    	
+    	var table = document.getElementById("Table");
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        var tBody = document.createElement("tbody");
+        table.appendChild (tBody); 
+        
+        var PlaylistID = document.createElement('th');
+        var name = document.createElement('th');
+        row.appendChild(PlaylistID);
+        row.appendChild(name);
+        PlaylistID.innerHTML = "Playlist ID";
+        name.innerHTML = "Playlist Name";
+    	
         var i = 0;
         var numRows = 0;
-        while ( i < arrayLength) {
+        while ( i < json.length) {
         	var rowNum = tBody.insertRow(numRows);
             var col1 = document.createElement('td');
+            var col2 = document.createElement('td');
             rowNum.appendChild(col1);
-            col1.innerHTML = arrayOfElements[i];
-            i++;
+            rowNum.appendChild(col2);
+            col1.innerHTML = json[i][0];
+            col2.innerHTML = json[i][1];
             i++;
             numRows++;
         }
-        $('#Table').dataTable(); 
-        tableexists = true;
+        $('#Table').dataTable();         
+        $('#Table tbody').on( 'click', 'tr', function () {
+        	selectedPlaylistID = this.cells[0].innerHTML
+        	if(selectedRow != null){
+        		selectedRow.style.backgroundColor = "transparent"
+        	}
+        	this.style.backgroundColor = "#B0BED9"
+            selectedRow = this
+            playlistbtn();
+        } );  
     }
     else {
-        alert("Result not found.");
+        alert("Playlist not found.");
+        $('#Table').dataTable();
     }
-}*/
-
-function displayLibraryPlaylists(){
-	
 }
 
-function displayPlaylistTracks(){
-	
-}
-
-function displayusers(){
-	document.getElementById("TableTitle").innerHTML = "Users:";
+function displayTracks(){
+	clearMain()
+	document.getElementById("TableTitle").innerHTML = "Tracks in "+ selectedPlaylistID+":";
 	document.getElementById("TableTitle").style.visibility = "visible"
-    var restUrl = "rest/users/allUsers";
+	var restUrl = "rest/query/searchTracks/"+selectedPlaylistID   
+	
     var json = (function () {
         var json = null;
         $.ajax({
@@ -206,60 +220,96 @@ function displayusers(){
         });
         return json;
     })();
-    var table = document.getElementById("Table");
-    var header = table.createTHead();
-    var row = header.insertRow(0);
-    var tBody = document.createElement("tbody");
-    table.appendChild (tBody); 
+	
     
-    var username = document.createElement('th');
-    var password = document.createElement('th');
-    var usertype = document.createElement('th');
-    row.appendChild(username);
-    row.appendChild(password);
-    row.appendChild(usertype);
-    username.innerHTML = "UserName";
-    password.innerHTML = "Password";
-    usertype.innerHTML = "User Type";
     if(json != null && json.length != 0) {
-        var str = json.toString();
-        var arrayOfElements = str.split(',');
-        var arrayLength = arrayOfElements.length;
+    	
+    	var table = document.getElementById("Table");
+        var header = table.createTHead();
+        var row = header.insertRow(0);
+        var tBody = document.createElement("tbody");
+        table.appendChild (tBody); 
+
+        var trackID = document.createElement('th');
+        var name = document.createElement('th');
+        var artist = document.createElement('th');
+        var album = document.createElement('th');
+        var genre = document.createElement('th');
+        row.appendChild(trackID);
+        row.appendChild(name);
+        row.appendChild(artist);
+        row.appendChild(album);
+        row.appendChild(genre);
+        trackID.innerHTML = "Track ID";
+        name.innerHTML = "Track Name";
+        artist.innerHTML = "Artist";
+        album.innerHTML = "Album";
+        genre.innerHTML = "Genre";
+    	
         var i = 0;
         var numRows = 0;
-        while ( i < arrayLength) {
+        while ( i < json.length) {
         	var rowNum = tBody.insertRow(numRows);
             var col1 = document.createElement('td');
             var col2 = document.createElement('td');
             var col3 = document.createElement('td');
+            var col4 = document.createElement('td');
+            var col5 = document.createElement('td');
             rowNum.appendChild(col1);
             rowNum.appendChild(col2);
             rowNum.appendChild(col3);
-            col1.innerHTML = arrayOfElements[i];
-            i++;
-            col2.innerHTML = arrayOfElements[i];
-            i++;
-            if(arrayOfElements[i] == 0){
-            	col3.innerHTML = "Administrator";
-            }
-            else if(arrayOfElements[i] == 1){
-            	col3.innerHTML = "Customer Service Rep";
-            }
-            else if(arrayOfElements[i] == 2){
-            	col3.innerHTML = "Support Engineer";
-            }
-            else if(arrayOfElements[i] == 3){
-            	col3.innerHTML = "Network Management Engineer";
-            }
+            rowNum.appendChild(col4);
+            rowNum.appendChild(col5);
+            col1.innerHTML = json[i][0];
+            col2.innerHTML = json[i][1];
+            col3.innerHTML = json[i][2];
+            col4.innerHTML = json[i][3];
+            col5.innerHTML = json[i][4];
             i++;
             numRows++;
         }
-        $('#Table').dataTable(); 
-        tableexists = true;
+        $('#Table').dataTable();         
+        $('#Table tbody').on( 'click', 'tr', function () {
+        	selectedTrackID = this.cells[0].innerHTML
+        	if(selectedRow != null){
+        		selectedRow.style.backgroundColor = "transparent"
+        	}
+        	this.style.backgroundColor = "#B0BED9"
+            selectedRow = this
+            trackbtn();
+        } );  
     }
     else {
-        alert("Result not found.");
+    	clearTable()
+        alert("no tracks in playlist.");
     }
+}
+
+//DELETING OBJECTS
+function deleteLibrary(){
+	
+}
+
+function deletePlaylist(){
+	
+}
+
+function deleteTrack(){
+	
+}
+
+//RENAMING OBJECTS
+function renamePlaylist(){
+	
+}
+
+function renameTrack(){
+	
+}
+
+//COPY
+function copyTrack(){
+	
 }
 
 function displayfailuredata(){
@@ -399,15 +449,22 @@ function displayfailuredata(){
 
 function clearTable() {
 	document.getElementById("TableTitle").style.visibility = "hidden"
-	document.getElementById("TableTitle").innerHTML = "";
-	if(tableexists ==true){
-	var div = document.getElementById("Table_wrapper");
-	var newtable = document.createElement("TABLE");
-	newtable.setAttribute("id", "Table");
-	newtable.setAttribute("class", "table table-striped");
-	
-	div.parentNode.appendChild(newtable);
-	div.parentNode.removeChild(div);
-	tableexists = false;
+		
+	if(document.getElementById("Table_wrapper") != null){
+		//alert("deleting table")
+		var div = document.getElementById("Table_wrapper");
+		var newtable = document.createElement("TABLE");
+		newtable.setAttribute("id", "Table");
+		newtable.setAttribute("class", "table table-striped");
+		
+		div.parentNode.appendChild(newtable);
+		div.parentNode.removeChild(div);
 	}
 }
+
+$(function() {
+	$(".clickable-row").click(function() {
+	        window.document.location = $(this).data("href");
+	});	
+});
+

@@ -15,17 +15,17 @@
 	<script type="text/javascript" src="AdminScripts.js"></script> 
 	
 	<!-- TABLES -->
+	
 	<link rel="stylesheet"	href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 	<script type="text/javascript" 	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-
+	
 </head>
 
 <body onload="admincheck()">
 <div id="container">
-<!--header-->
+<!--HEADER-->
 	<div id="header">
-		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Ericsson_logo.svg/1135px-Ericsson_logo.svg.png" width="120" height="135" style="float:left;">
-		<!-- <center><img src="logo.PNG" height = "120px"></center>-->
+		<img src="http://icons.iconarchive.com/icons/cornmanthe3rd/metronome/512/Media-iTunes-icon.png" width="135" height="135" style="float:left;">
 		<div id="userinfo">
 			<p id="loggedin"></p>
 			<a href="login.html" onclick="logout()">Logout</a>
@@ -33,109 +33,56 @@
 	</div>
 	
 	
-<!--sidebar-->
+<!--SIDEBAR-->
 	<div Id="sidebar">
-	
 	<div id="searchType" class="sidebar">
-		<h3>Admin Controls</h3>
+		<h3>User Controls</h3>
 		<p><button onclick="DatasetButton()" class="btn btn-primary" type="button">Backup iTunes Library</button></p>
-		<p><button onclick="displayLibraries()" class="btn btn-primary" type="button">View all Libraries</button></p>
-<!--  																-> FROM HERE CLICK ON LIBRARY -> "VIEW/EDIT LIBRARY" AND "DELETE" BTN SHOWS
-																	BRING TO LIST OF PLAYLISTS IN LIBRARY -> CLICK ON ONE -> "CHANGE/VIEW PLIST" AND "DELETE PLAYLIST"
-																	SHOW ALL TRACKS IN PLAYLIST -> CLICK ON ONE TRACK -> "MOVE POSITION" "DELETE FROM PLAYLIST" "MOVE TO OTHER PLAYLIST"
-		
-		
-		
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">playlist controls</button></p>
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">View tracks</button></p>
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">move track</button></p>
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">delete account</button></p>-->
-		
-		<p><button onclick="UserFunctionsButton()" class="btn btn-primary" type="button">Delete account</button></p>
-				<!-- ARE YOU SURE? WILL DELETE YOUR ACCOUNT AND ALL LIBRARIES YOU HAVE UPLOADED -> BRING TO LOGIN -->
+		<p><button onclick="displayLibraries()" class="btn btn-primary" type="button">View Libraries</button></p>
+	<!--FROM HERE CLICK ON LIBRARY -> "VIEW/EDIT LIBRARY" AND "DELETE" BTN SHOWS
+		BRING TO LIST OF PLAYLISTS IN LIBRARY -> CLICK ON ONE -> "CHANGE/VIEW PLIST" AND "DELETE PLAYLIST"
+		SHOW ALL TRACKS IN PLAYLIST -> CLICK ON ONE TRACK -> "MOVE POSITION" "DELETE FROM PLAYLIST" "MOVE TO OTHER PLAYLIST"	-->	
+			
+		<p><button onclick="clearTable()" class="btn btn-primary" type="button">Delete account</button></p>
+		<!-- ARE YOU SURE? WILL DELETE YOUR ACCOUNT AND ALL LIBRARIES YOU HAVE UPLOADED -> BRING TO LOGIN -->
+	</div>
 	</div>
 
-	<div id="userControls" class="sidebar notSearch">
-		<h3>Change users</h3>
-		<p><button onclick="AddUserButton()" class="btn btn-primary" type="button">Add User</button></p>
-		<p><button onclick="DeleteUserButton()" class="btn btn-primary" type="button">Delete User</button></p>
-		<p><button onclick="EditUserButton()" class="btn btn-primary" type="button">Edit User</button></p>
-	</div>
-
-	<div id="edituser" class="sidebar notSearch">
-		<h3>Edit user</h3>
-		User to edit:
-		<input type="text" id="findusername">
-		<button name="data" type="button" onclick="finduser()" class="btn btn-primary">Find User</button>
-		<br/>		
-	</div>
-	
-	<div id="deleteuser" class="sidebar notSearch">
-		<H3>Delete user</H3>
-		Username:
-		<input type="text" id="name">
-		<br/>
-		<button name="data" type="button" onclick="deleteuser()" class="btn btn-primary">Delete user</button>		
-		
-	</div>
-</div>
-
-	<!-- MAIN SECTION -->
+<!-- MAIN SECTION -->
 	<div id="TableSection">
 		<h3 id="TableTitle" style="visibility: hidden"></h3>
-		<table id ="Table" class="table table-striped"></table>
+		<table id ="Table" class="table table-striped"></table>	
 		<div id="mainsection">
 			<div id="uploadData" class="sidebar notSearch">
 				<h3>Upload Library</h3>		
 				<p>.xml Library file:</p>
 				<input type="file" id="filepath" placeholder="XML FILE"><p></p>
 				<button onclick="upload()" class="btn btn-primary" type="button">Load data</button><br>
-			</div>
-			
-			<div id="edituserinfo" class="sidebar notSearch">	
-				<h4> </h4>
-				<H3>User Information</H3>
-				Username:
-				<input type="text" id="editusername">
-				<br/>
-				Password:
-				<input type="password" id="editpw">
-				<br/>
-				Role:
-		    	<select class="form-control" id="editlevel">
-				    <option value="0">Administrator</option>
-				    <option value="3">Network Management Engineer</option>
-				    <option value="2">Support Engineer</option>
-				    <option value="1">Customer Service Rep</option>
-			    </select>
-				<br/>
-				<button name="data" type="button" onclick="edituser()" class="btn btn-primary">Edit User</button>	
-				<p></p>
-				<button name="data" type="button" onclick="EditUserButton()" class="btn btn-primary">Back</button>
-			</div>
-			
-			<div id="createuser" class="sidebar notSearch">
-				<h3>Create user</h3>
-				Username:
-				<input type="text" id="username">
-				<br/>
-				Password:
-				<input type="password" id="pw">
-				<br/>
-				confirm Password:
-				<input type="password" id="confirm">
-				<br/>	
-				Role:
-			    <select class="form-control" id="userlevel">
-				    <option value="0">Administrator</option>
-					<option value="3">Network Management Engineer</option>
-					<option value="2">Support Engineer</option>
-				    <option value="1">Customer Service Rep</option>
-			    </select>
-				<br/>
-				<button name="data" type="button" onclick="adduser()" class="btn btn-primary">Add User</button>
-			</div>
+			</div>	
 		</div>
+	</div>
+	
+	<div id="librarybtns" class="sidebar notSearch">
+		<center>
+		<button onclick="displayPlaylists()" class="btn btn-primary" type="button" style="width:250px">View Library</button>
+		<button onclick="deleteLibrary()" class="btn btn-primary" type="button" style="width:250px">Delete Library</button>	
+		</center>
+	</div>
+	
+	<div id="playlistbtns" class="sidebar notSearch">
+		<center>
+		<button onclick="displayTracks()" class="btn btn-primary" type="button" style="width:250px">View Playlist tracks</button>
+		<button onclick="renamePlaylist()" class="btn btn-primary" type="button" style="width:250px">Rename Playlist</button>
+		<button onclick="deletePlaylist()" class="btn btn-primary" type="button" style="width:250px">Delete Playlist</button>	
+		</center>
+	</div>
+	
+	<div id="trackbtns" class="sidebar notSearch">
+		<center>
+		<button onclick="removeTrack()" class="btn btn-primary" type="button" style="width:250px">Remove Track From Playlist</button>
+		<button onclick="renameTrack()" class="btn btn-primary" type="button" style="width:250px">Rename Track</button>
+		<button onclick="copyTrack()" class="btn btn-primary" type="button" style="width:250px">Copy to Other Playlist</button>	
+		</center>
 	</div>
 	
 	<div id="footer">Copyright &copy; Bits Don't Kill My Vibe<br></div>

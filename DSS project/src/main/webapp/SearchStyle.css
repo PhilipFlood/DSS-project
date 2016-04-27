@@ -1,6 +1,9 @@
 .notSearch {
 	display: none;
 }
+
+tr.selected{background-color:#B0BED9}
+
 .notUsed {
 	display: none;}
 
@@ -95,7 +98,7 @@ h1 {  margin-top: 0;
 #TableSection h3{ padding-bottom: 2px;
 				text-align: center;
               border-bottom: 1px solid #000000;
-              width:300px;
+              width:100%;
               margin: 10px;
 			  font-size: 2em;
               color: #003366;

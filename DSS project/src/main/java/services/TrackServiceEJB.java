@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -42,4 +43,7 @@ public class TrackServiceEJB implements TrackService {
 		this.TrackDao = TrackDao;
 	}	
 	
+	public List<Track> searchPlaylistTracks(int playlist){
+		return TrackDao.searchPlaylistTracks(playlist);
+	}
 }

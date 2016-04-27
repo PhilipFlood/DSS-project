@@ -45,6 +45,7 @@ public class DataQuery {
 	@Inject 
 	private UserService userService;
 
+//GETTERS FOR ALL DATA, USING TO TEST
 	@GET
 	@Path("/allLibraries")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -81,6 +82,7 @@ public class DataQuery {
 		return ptracks ;
 	}
 	
+	//UPLOAD AND PARSE LIBRARY
 	@GET
 	@Path("/persist/{username}/{filename}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -281,6 +283,7 @@ public class DataQuery {
 		return null;
 	}
 	
+	//DELETING OBJECTS
 	@GET
 	@Path("/deleteplaylist")
 	public Collection<PlaylistTrack> deleteplaylist() {
@@ -290,12 +293,47 @@ public class DataQuery {
 		return null ;
 	}
 	
+//	@GET
+//	@Path("/deleteLibrary/{libraryID}")
+//	public void deleteLibrary(@PathParam("libraryID") String libraryID) {
+//		
+//		Playlist newplay = libraryService.searchLibrary(libraryID);
+//		playlistService.deletePlaylist(newplay);
+//	}
+//	
+//	@GET
+//	@Path("/deleteplaylist")
+//	public Collection<PlaylistTrack> deleteplaylist() {
+//		Playlist newplay = playlistService.getPlaylistByName("LIBRERIA");
+//		
+//		playlistService.deletePlaylist(newplay);
+//		return null ;
+//	}
+	
+	
+	//TABLE QUERIES
 	@GET
 	@Path("/searchLibrary/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Library> searchEventCauseByIMSI(@PathParam("username") String username){
-		System.out.println(username);
+	public Collection<Library> searchUserLibraries(@PathParam("username") String username){
+		//System.out.println(username);
 		return libraryService.searchLibrary(username);
+	}
+	
+	@GET
+	@Path("/searchPlaylists/{library}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Playlist> searchlibraryPlaylists(@PathParam("library") String library){
+		//System.out.println(username);
+		return playlistService.searchPlaylists(library);
+	}
+	
+	@GET
+	@Path("/searchTracks/{playlist}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Track> searchPlaylistsTracks(@PathParam("playlist") int playlist){
+		//System.out.println(username);
+		return trackService.searchPlaylistTracks(playlist);
 	}
 	
 //	@GET

@@ -53,4 +53,11 @@ public class PlaylistDAO implements IPlaylistDAO {
 		}
 		return null;
 	}
+	
+	public List<Playlist> searchPlaylists(String library){
+		Query query  = em.createQuery("select playlistID, name from Playlist where library.libraryID = :library");
+		query.setParameter("library", library);
+		List<Playlist> result = query.getResultList();
+		return result;
+	}
 }

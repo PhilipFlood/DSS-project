@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -34,6 +35,10 @@ public class PlaylistServiceEJB implements PlaylistService {
 		PlaylistDao.deletePlaylist(Playlist);
 	}
 	
+	public List<Playlist> searchPlaylists(String library){
+		return PlaylistDao.searchPlaylists(library);
+	}
+	
 	public IPlaylistDAO getPlaylistDao() {
 		return PlaylistDao;
 	}
@@ -41,5 +46,7 @@ public class PlaylistServiceEJB implements PlaylistService {
 	public void setPlaylistDao(IPlaylistDAO PlaylistDao) {
 		this.PlaylistDao = PlaylistDao;
 	}	
+	
+	
 	
 }

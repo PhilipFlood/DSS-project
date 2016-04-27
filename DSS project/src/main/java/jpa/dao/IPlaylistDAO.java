@@ -2,6 +2,7 @@ package jpa.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -15,4 +16,5 @@ public interface IPlaylistDAO {
 	void deletePlaylist(Playlist Playlist);
 	Collection<Playlist> getAllPlaylists();
 	Playlist getPlaylistByName(String Playlistname);
+	List<Playlist> searchPlaylists(String library);
 }
