@@ -379,11 +379,22 @@ function rename(){
 
 //COPY
 function copyTrack(){
+	var newplaylist = document.getElementById('allplaylists').value;
+	var newplaylistID = newplaylist.split(',')[0];
 	
+	var restUrl = "rest/query/moveTrack/"+selectedPlaylistID +"/"+ newplaylistID +"/"+selectedTrackID
+	$.ajax({
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+        	displayTracks()
+        }
+    });	
 }
 
 function getavailableplaylists(){
-	alert("in funct")
 	var array = (function () {
         var json = null;
         $.ajax({
@@ -398,14 +409,11 @@ function getavailableplaylists(){
         return json;
     })();   
 	
-	alert(array)
-	alert(array[0][1])
 	var playlists = []
 	for(i = 0; i< array.length; i++){
 		playlists.push(array[i][1]);
 	}
-	alert(playlists)
-		
+	
 	return array
 }
 

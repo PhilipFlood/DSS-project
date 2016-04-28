@@ -38,7 +38,6 @@ import entities.PlaylistTrack;
 import entities.Track;
 import entities.User;
 
-
 @Path("/query")
 public class DataQuery {
 	@Inject
@@ -354,149 +353,33 @@ public class DataQuery {
 	}	
 	
 	//RENAMING OBJECTS
-		@GET
-		@Path("/renameTrack/{id}/{newname}")
-		@Produces(MediaType.APPLICATION_JSON)
-		public void renameTrack(@PathParam("id") int id, @PathParam("newname") String newname){
-			
-			Track track= trackService.getTrackByID(id);
-			track.setName(newname);
-			ArrayList<Track> newtracks = new ArrayList<Track>();
-			newtracks.add(track);
-			
-			trackService.addTrack(newtracks);
-		}	
+	@GET
+	@Path("/renameTrack/{id}/{newname}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void renameTrack(@PathParam("id") int id, @PathParam("newname") String newname){
+		
+		Track track= trackService.getTrackByID(id);
+		track.setName(newname);
+		ArrayList<Track> newtracks = new ArrayList<Track>();
+		newtracks.add(track);
+		
+		trackService.addTrack(newtracks);
+	}	
 	
-	
-//	@GET
-//	@Path("/allevents")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Event> getAllEvents() {
-//		return eventService.getAllEvents();
-//	}
-//	
-//	@GET
-//	@Path("/allimsi")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<String> getAllImsi() {
-//
-//		return eventService.getAllImsi();
-//	}
-//	
-//	@GET
-//	@Path("/allmodels")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Object[]> getAllModels() {
-//
-//		return mobileTypeService.getAllMobileModels();
-//	}
-//	
-//	@GET
-//	@Path("/failureClass")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<FailureClass>loadFailureClass(){
-//		return failureClassService.getAllFailureClass();
-//	}
-//	
-//	@GET
-//	@Path("/failedEntries")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<FailedEntry> failedEntries(){
-//		return failedEntryService.getAllEvents();
-//	}
-//	
-//	/*	@GET
-//	@Path("/eventCause")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<EventCause> getEventCauseTable(){
-//		return eventCauseService.getAllEventCauses();
-//	}*/
-//	
-//	@GET
-//	@Path("/searchEventCause/{imsi}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Object[]> searchEventCauseByIMSI(@PathParam("imsi") String imsi){
-//		System.out.println(imsi);
-//		return eventService.getEventCauseByIMSI(imsi);
-//	}
-//	
-//	@GET
-//	@Path("/searchIMSIByDates/{d1}/{d2}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Object[]> SearchByDate(@PathParam("d1") String d1 ,@PathParam("d2")String d2) throws ParseException{
-//		SimpleDateFormat dateformat2 = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		System.out.println(d1 +"\t" + d2);
-//		Date date1 = dateformat2.parse(d1);
-//		Date date2 = dateformat2.parse(d2);
-//		return eventService.getIMSIBtwnDates(date1,date2);
-//	}
-//	
-//	@GET
-//	@Path("/searchMobileType/{m}/{d1}/{d2}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public int phoneModelFailureCount(@PathParam("m") String mobileType, @PathParam("d1") String d1 ,@PathParam("d2")String d2) throws ParseException{
-//		SimpleDateFormat dateformat2 = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		System.out.println(d1 +"\t" + d2);
-//		Date date1 = dateformat2.parse(d1);
-//		Date date2 = dateformat2.parse(d2);
-//		return eventService.getFailureCountByModel(mobileType,date1,date2);
-//	}
-//	
-//	@GET
-//	@Path("/imsifc/{imsi}/{d1}/{d2}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public int IMSIFailureCount(@PathParam("imsi") String imsi, @PathParam("d1") String d1 ,@PathParam("d2")String d2) throws ParseException{
-//		SimpleDateFormat dateformat2 = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		System.out.println(d1 +"\t" + d2);
-//		Date date1 = dateformat2.parse(d1);
-//		Date date2 = dateformat2.parse(d2);
-//		return eventService.getFailureCountByimsi(imsi,date1,date2);
-//	}
-//	
-//	@GET
-//	@Path("/10MarketOperatorCell/{d1}/{d2}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Object[]> top10MarketOperatorCell(@PathParam("d1") String d1 ,@PathParam("d2")String d2)  throws ParseException {
-//		SimpleDateFormat dateformat2 = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		System.out.println(d1 +"\t" + d2);
-//		Date date1 = dateformat2.parse(d1);
-//		Date date2 = dateformat2.parse(d2);
-//		
-//		return eventService.get10MarketOperatorCellID(date1, date2);
-//	}
-//	
-//	@GET
-//	@Path("/fceibpm/{model}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Object[]> eventIdCauseCodeByModel(@PathParam("model") String model){
-//		
-//		return eventService.FailureCodeEventIdByModel(model);
-//	}
-//
-//	@GET
-//	@Path("/searchIMSIByCauseCode/{CC}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<String> searchByFailureClass(@PathParam("CC") int cc) throws ParseException {
-//		
-//		return eventService.searchByFailureClass(cc);
-//	}
-//	
-//	@GET
-//	@Path("/top10failuresbyIMSI/{d1}/{d2}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<String> top10failuresbyIMSI(@PathParam("d1") String d1 ,@PathParam("d2")String d2) throws ParseException{
-//		SimpleDateFormat dateformat2 = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		Date date1 = dateformat2.parse(d1);
-//		Date date2 = dateformat2.parse(d2);
-//		return eventService.top10failuresbyIMSI(date1,date2);
-//	}	
-//
-//	@GET
-//	@Path("/searchUniqueCauseCodeByIMSI/{imsi}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<Integer> searchUniqueCauseCodeByIMSI(@PathParam("imsi") String imsi) throws ParseException {
-//		
-//		return eventService.searchUniqueCauseCodeByIMSI(imsi);
-//	}
-	
+	//MOVING TRACKS
+	@GET
+	@Path("/moveTrack/{oldPlaylistID}/{newPlaylistID}/{trackID}")
+	public void moveTrack(@PathParam("oldPlaylistID") int oldPlaylistID,@PathParam("newPlaylistID") int newPlaylistID, @PathParam("trackID") int trackID) {
+		
+		PlaylistTrack oldptrack = playlistTrackService.getPlaylistTrackByID(oldPlaylistID, trackID);
+		playlistTrackService.deletePlaylistTrack(oldptrack);
+
+		Track track = trackService.getTrackByID(trackID);
+		Playlist playlist = playlistService.getPlaylistByID(newPlaylistID);
+		PlaylistTrack newptrack = new PlaylistTrack(track, playlist);
+		
+		ArrayList<PlaylistTrack> ptracks = new ArrayList<PlaylistTrack>();
+		ptracks.add(newptrack);
+		playlistTrackService.addPlaylistTrack(ptracks);
+	}
 }

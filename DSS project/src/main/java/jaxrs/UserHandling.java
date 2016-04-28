@@ -108,40 +108,4 @@ public class UserHandling {
 			return nullUser;
 		}	
 	}
-	
-	@POST
-	@Path("/edituser")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public User EditUser(String user) throws JsonParseException, JsonMappingException, IOException{
-		ObjectMapper objectMapper = new ObjectMapper();	
-		user = objectMapper.readValue(user, String.class);
-		
-		String oldname = user.split(" ")[0];
-		String username = user.split(" ")[1];
-		String password = user.split(" ")[2];
-		User nulluser;
-		
-		User selecteduser = userService.getUserByName(oldname);
-		selecteduser.setPassword(password);		
-		userService.addUser(selecteduser);
-		
-		if(oldname.equals(username)){
-			return selecteduser;
-		}
-		else{
-			if(userService.getUserByName(username)!=null){
-				nulluser = new User("","");
-				return nulluser;
-			}
-			else{
-				selecteduser.setUsername(username);
-				userService.deleteUser(userService.getUserByName(oldname));
-				userService.addUser(selecteduser);
-				return selecteduser;
-			}
-		}	
-
-	}
-	
 }
