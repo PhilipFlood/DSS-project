@@ -30,6 +30,16 @@ public class LibraryServiceEJB implements LibraryService{
 	public void addLibrary(ArrayList<Library> librariesTable) {
 		libraryDAO.addLibrary(librariesTable);
 	}
+	
+	@Override
+	public void deleteLibrary(Library Library){
+		libraryDAO.deleteLibrary(Library);
+	}
+	
+	@Override
+	public Library getLibraryByID(String libraryID){
+		return libraryDAO.getLibraryByID(libraryID);
+	}
 
 	public ILibraryDAO getLibraryDAO() {
 		return libraryDAO;
@@ -38,4 +48,6 @@ public class LibraryServiceEJB implements LibraryService{
 	public void setLibraryDAO(ILibraryDAO libraryDAO) {
 		this.libraryDAO = libraryDAO;
 	}
+	
+	
 }

@@ -18,8 +18,8 @@ public class PlaylistTrackServiceEJB implements PlaylistTrackService {
 	@Inject
 	private IPlaylistTrackDAO PlaylistTrackDao;
 		
-	public PlaylistTrack getPlaylistTrackByName(String PlaylistTrackname) {
-		return PlaylistTrackDao.getPlaylistTrackByName(PlaylistTrackname);
+	public PlaylistTrack getPlaylistTrackByID(int playlistID, int trackID) {
+		return PlaylistTrackDao.getPlaylistTrackByID(playlistID, trackID);
 	}
 	
 	public Collection<PlaylistTrack> getAllPlaylistTracks() {

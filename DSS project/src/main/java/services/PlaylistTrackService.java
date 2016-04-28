@@ -13,5 +13,5 @@ public interface PlaylistTrackService {
 	abstract void addPlaylistTrack(ArrayList<PlaylistTrack>  PlaylistTrack);	
 	abstract void deletePlaylistTrack(PlaylistTrack PlaylistTrack);	
 	abstract Collection<PlaylistTrack> getAllPlaylistTracks();
-	abstract PlaylistTrack getPlaylistTrackByName(String PlaylistTrackname);	
+	abstract PlaylistTrack getPlaylistTrackByID(int playlistID, int trackID);	
 }

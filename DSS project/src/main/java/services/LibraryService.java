@@ -14,4 +14,6 @@ public interface LibraryService {
 	abstract List<Library> searchLibrary(String libraryID);
 	abstract Collection<Library> getAllLibrary();
 	abstract void addLibrary(ArrayList<Library> librariesTable);
+	abstract void deleteLibrary(Library Library);
+	abstract Library getLibraryByID(String libraryID);
 }

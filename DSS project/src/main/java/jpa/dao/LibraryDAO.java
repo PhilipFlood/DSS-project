@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entities.Library;
+import entities.Playlist;
 
 @Local
 @Stateless
@@ -41,5 +42,22 @@ public class LibraryDAO implements ILibraryDAO {
 		for (Library library : libraries){
 			em.merge(library);
 		}
+	}
+	
+	@Override
+	public void deleteLibrary(Library Library) {
+		em.remove(em.contains(Library) ? Library : em.merge(Library));
+	}
+
+	@Override
+	public Library getLibraryByID(String libraryID) {
+		Query query  = em.createQuery("from Library where libraryID = :libraryID");
+		query.setParameter("libraryID", libraryID);
+
+		if(query.getResultList().size()>0){
+			Library library =  (Library) query.getResultList().get(0);
+			return library;
+		}
+		return null;
 	}
 }

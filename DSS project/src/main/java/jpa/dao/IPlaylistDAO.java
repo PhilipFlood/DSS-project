@@ -15,6 +15,6 @@ public interface IPlaylistDAO {
 	void addPlaylist(ArrayList<Playlist> Playlist);
 	void deletePlaylist(Playlist Playlist);
 	Collection<Playlist> getAllPlaylists();
-	Playlist getPlaylistByName(String Playlistname);
+	Playlist getPlaylistByID(int playlistID);
 	List<Playlist> searchPlaylists(String library);
 }

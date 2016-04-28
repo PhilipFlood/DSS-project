@@ -84,22 +84,15 @@ function adduser(){
 }
 
 function deleteuser(){
+	var user = localStorage.getItem("username")
 		$.ajax({
 			async: false,
 			type : 'POST',
 			url : 'rest/users/deleteuser',
-			data : JSON.stringify(document.getElementById("name").value) ,
+			data : JSON.stringify(user),
 			success : function isSearchData(data) {
-				clearTable();
-				displayusers();
-				if(data.userType==4){
-					alert("User doesn't exist");	
-					document.getElementById('name').value = "";
-				}
-				else{
-					//alert("User has been deleted");	
-					document.getElementById('name').value = "";
-				}
+				alert("your account has been deleted!")
+				logout()
 			},
 			contentType : 'application/json'
 		 });

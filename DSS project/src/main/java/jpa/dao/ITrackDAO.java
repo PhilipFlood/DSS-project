@@ -15,6 +15,6 @@ public interface ITrackDAO {
 	void addTrack(ArrayList<Track> Track);
 	void deleteTrack(Track Track);
 	Collection<Track> getAllTracks();
-	Track getTrackByName(String Trackname);
+	Track getTrackByID(int trackID);
 	List<Track> searchPlaylistTracks(int playlist);
 }

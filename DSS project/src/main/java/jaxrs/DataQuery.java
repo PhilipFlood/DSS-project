@@ -1,12 +1,15 @@
 package jaxrs;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +17,10 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jaxb.entities.Array;
 import jaxb.entities.Dict;
@@ -285,30 +292,26 @@ public class DataQuery {
 	
 	//DELETING OBJECTS
 	@GET
-	@Path("/deleteplaylist")
-	public Collection<PlaylistTrack> deleteplaylist() {
-		Playlist newplay = playlistService.getPlaylistByName("LIBRERIA");
-		
+	@Path("/deletePlaylist/{playlistID}")
+	public void deleteplaylist(@PathParam("playlistID") int playlistID) {
+		Playlist newplay = playlistService.getPlaylistByID(playlistID);
 		playlistService.deletePlaylist(newplay);
-		return null ;
 	}
 	
-//	@GET
-//	@Path("/deleteLibrary/{libraryID}")
-//	public void deleteLibrary(@PathParam("libraryID") String libraryID) {
-//		
-//		Playlist newplay = libraryService.searchLibrary(libraryID);
-//		playlistService.deletePlaylist(newplay);
-//	}
-//	
-//	@GET
-//	@Path("/deleteplaylist")
-//	public Collection<PlaylistTrack> deleteplaylist() {
-//		Playlist newplay = playlistService.getPlaylistByName("LIBRERIA");
-//		
-//		playlistService.deletePlaylist(newplay);
-//		return null ;
-//	}
+	@GET
+	@Path("/deleteLibrary/{libraryID}")
+	public void deleteLibrary(@PathParam("libraryID") String libraryID) {
+		
+		Library library = libraryService.getLibraryByID(libraryID);
+		libraryService.deleteLibrary(library);
+	}
+
+	@GET
+	@Path("/deletePlaylistTrack/{playlistID}/{trackID}")
+	public void deletePlaylistTrack(@PathParam("playlistID") int playlistID,@PathParam("trackID") int trackID) {
+		PlaylistTrack ptrack = playlistTrackService.getPlaylistTrackByID(playlistID, trackID);
+		playlistTrackService.deletePlaylistTrack(ptrack);
+	}
 	
 	
 	//TABLE QUERIES
@@ -335,6 +338,35 @@ public class DataQuery {
 		//System.out.println(username);
 		return trackService.searchPlaylistTracks(playlist);
 	}
+	
+	//RENAMING OBJECTS
+	@GET
+	@Path("/renamePlaylist/{id}/{newname}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void renamePlaylist(@PathParam("id") int id, @PathParam("newname") String newname){
+		
+		Playlist playlist = playlistService.getPlaylistByID(id);
+		playlist.setName(newname);
+		ArrayList<Playlist> newplaylists = new ArrayList<Playlist>();
+		newplaylists.add(playlist);
+		
+		playlistService.addPlaylist(newplaylists);
+	}	
+	
+	//RENAMING OBJECTS
+		@GET
+		@Path("/renameTrack/{id}/{newname}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public void renameTrack(@PathParam("id") int id, @PathParam("newname") String newname){
+			
+			Track track= trackService.getTrackByID(id);
+			track.setName(newname);
+			ArrayList<Track> newtracks = new ArrayList<Track>();
+			newtracks.add(track);
+			
+			trackService.addTrack(newtracks);
+		}	
+	
 	
 //	@GET
 //	@Path("/allevents")

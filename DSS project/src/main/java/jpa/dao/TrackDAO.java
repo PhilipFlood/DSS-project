@@ -43,9 +43,9 @@ public class TrackDAO implements ITrackDAO {
 	}
 	
 	@Override
-	public Track getTrackByName(String Trackname) {
-		Query query  = em.createQuery("from Track where Trackname = :Trackname");
-		query.setParameter("Trackname", Trackname);
+	public Track getTrackByID(int trackID) {
+		Query query  = em.createQuery("from Track where trackID = :trackID");
+		query.setParameter("trackID", trackID);
 
 		if(query.getResultList().size()>0){
 			Track Track =  (Track) query.getResultList().get(0);
@@ -54,6 +54,7 @@ public class TrackDAO implements ITrackDAO {
 		return null;
 	}
 	
+	@Override
 	public List<Track> searchPlaylistTracks(int playlist){
 		Query query  = em.createQuery("select track.trackID, track.name, track.artist, track.album, track.genre from PlaylistTrack where playlist.playlistID = :playlist");
 		query.setParameter("playlist", playlist);

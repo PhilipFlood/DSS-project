@@ -15,4 +15,6 @@ public interface ILibraryDAO {
 	List<Library> searchLibrary(String username);
 	abstract void addLibrary(ArrayList<Library> library);
 	Collection<Library> getAllLibrary();
+	void deleteLibrary(Library Library);
+	Library getLibraryByID(String libraryID);
 }

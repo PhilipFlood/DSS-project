@@ -41,22 +41,6 @@ public class UserHandling {
 	}
 	
 	@POST
-	@Path("/search")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public User SearchUser(String user) throws JsonParseException, JsonMappingException, IOException{
-		ObjectMapper objectMapper = new ObjectMapper();	
-		user = objectMapper.readValue(user, String.class);
-		
-		if(userService.getUserByName(user) != null){
-			return userService.getUserByName(user);
-		}
-		else{
-			return null;
-		}	
-	}
-	
-	@POST
 	@Path("/authenticate")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

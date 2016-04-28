@@ -19,8 +19,8 @@ public class PlaylistServiceEJB implements PlaylistService {
 	@Inject
 	private IPlaylistDAO PlaylistDao;
 		
-	public Playlist getPlaylistByName(String Playlistname) {
-		return PlaylistDao.getPlaylistByName(Playlistname);
+	public Playlist getPlaylistByID(int playlistID) {
+		return PlaylistDao.getPlaylistByID(playlistID);
 	}
 	
 	public Collection<Playlist> getAllPlaylists() {

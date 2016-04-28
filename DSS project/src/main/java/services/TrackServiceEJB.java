@@ -19,8 +19,8 @@ public class TrackServiceEJB implements TrackService {
 	@Inject
 	private ITrackDAO TrackDao;
 		
-	public Track getTrackByName(String Trackname) {
-		return TrackDao.getTrackByName(Trackname);
+	public Track getTrackByID(int trackID) {
+		return TrackDao.getTrackByID(trackID);
 	}
 	
 	public Collection<Track> getAllTracks() {

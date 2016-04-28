@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Admin Menu</title>
+	<title>Main Menu</title>
 
 	<!-- bootstrap dropdown -->
  	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,9 +15,12 @@
 	<script type="text/javascript" src="AdminScripts.js"></script> 
 	
 	<!-- TABLES -->
-	
 	<link rel="stylesheet"	href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 	<script type="text/javascript" 	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	
+	<!-- DROPDOWN AUTOCOMPLETE -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
 	
 </head>
 
@@ -43,8 +46,20 @@
 		BRING TO LIST OF PLAYLISTS IN LIBRARY -> CLICK ON ONE -> "CHANGE/VIEW PLIST" AND "DELETE PLAYLIST"
 		SHOW ALL TRACKS IN PLAYLIST -> CLICK ON ONE TRACK -> "MOVE POSITION" "DELETE FROM PLAYLIST" "MOVE TO OTHER PLAYLIST"	-->	
 			
-		<p><button onclick="clearTable()" class="btn btn-primary" type="button">Delete account</button></p>
-		<!-- ARE YOU SURE? WILL DELETE YOUR ACCOUNT AND ALL LIBRARIES YOU HAVE UPLOADED -> BRING TO LOGIN -->
+		<p><button onclick="deleteuser()" class="btn btn-primary" type="button">Delete account</button></p>
+	</div>
+	
+	<div id="rename" class="notSearch">
+		<h3>Rename:</h3>
+		<input type="text" class="form-control" id="renamefield" placeholder="new name" > 
+		<button onclick="rename()" class="btn btn-primary" type="button" >Submit</button></p>
+	</div>
+	
+	<div id="copyplaylist" class="notSearch">
+		<h3>Change to:</h3>
+		<p>Playlist to copy to:
+		<select class="js-example-basic-multiple" id="allplaylists" style="width:100%"></select></p>
+		<button onclick="copyTrack()" class="btn btn-primary" type="button" >Submit</button></p>
 	</div>
 	</div>
 
@@ -62,6 +77,7 @@
 		</div>
 	</div>
 	
+	<div id="chartSection">
 	<div id="librarybtns" class="sidebar notSearch">
 		<center>
 		<button onclick="displayPlaylists()" class="btn btn-primary" type="button" style="width:250px">View Library</button>
@@ -72,19 +88,23 @@
 	<div id="playlistbtns" class="sidebar notSearch">
 		<center>
 		<button onclick="displayTracks()" class="btn btn-primary" type="button" style="width:250px">View Playlist tracks</button>
-		<button onclick="renamePlaylist()" class="btn btn-primary" type="button" style="width:250px">Rename Playlist</button>
+		<button onclick="renamebtn(1)" class="btn btn-primary" type="button" style="width:250px">Rename Playlist</button>
 		<button onclick="deletePlaylist()" class="btn btn-primary" type="button" style="width:250px">Delete Playlist</button>	
+		<p></p>
+		<button onclick="displayLibraries()" class="btn btn-primary" type="button" style="width:250px">Back</button>	<p></p>
 		</center>
 	</div>
 	
 	<div id="trackbtns" class="sidebar notSearch">
 		<center>
-		<button onclick="removeTrack()" class="btn btn-primary" type="button" style="width:250px">Remove Track From Playlist</button>
-		<button onclick="renameTrack()" class="btn btn-primary" type="button" style="width:250px">Rename Track</button>
-		<button onclick="copyTrack()" class="btn btn-primary" type="button" style="width:250px">Copy to Other Playlist</button>	
+		<button onclick="deleteTrack()" class="btn btn-primary" type="button" style="width:250px">Remove Track From Playlist</button>
+		<button onclick="renamebtn(2)" class="btn btn-primary" type="button" style="width:250px">Rename Track</button>
+		<button onclick="copybtn()" class="btn btn-primary" type="button" style="width:250px">Copy to Other Playlist</button>	
+		<p></p>
+		<button onclick="displayPlaylists()" class="btn btn-primary" type="button" style="width:250px">Back</button>	<p></p>
 		</center>
 	</div>
-	
+	</div>
 	<div id="footer">Copyright &copy; Bits Don't Kill My Vibe<br></div>
 </div>
 

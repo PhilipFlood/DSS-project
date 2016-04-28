@@ -14,6 +14,6 @@ public interface PlaylistService {
 	abstract void addPlaylist(ArrayList<Playlist>  Playlist);	
 	abstract void deletePlaylist(Playlist Playlist);	
 	abstract Collection<Playlist> getAllPlaylists();
-	abstract Playlist getPlaylistByName(String Playlistname);	
+	abstract Playlist getPlaylistByID(int playlistID);	
 	abstract List<Playlist> searchPlaylists(String library);
 }

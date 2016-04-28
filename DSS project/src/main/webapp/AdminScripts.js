@@ -3,6 +3,7 @@ var selectedLibraryID;
 var selectedPlaylistID;
 var selectedTrackID;
 var selectedRow;
+var renamechoice;
 
 //upload library
 function upload() {
@@ -10,7 +11,6 @@ function upload() {
 	var filename = document.getElementById("filepath").value;
 	var username = localStorage.getItem("username")
 	var restUrl = "rest/query/persist/" + username + "/" + filename;
-	
 	$.ajax({
         'async': false,
         'global': false,
@@ -19,8 +19,7 @@ function upload() {
         'success': function (data) {
             alert("your library has been uploaded")
         }
-    });
-	
+    });	
 }
 
 //get user that's logged in
@@ -40,6 +39,8 @@ function clearMain(){
 	$('#librarybtns').addClass('notSearch');
 	$('#playlistbtns').addClass('notSearch');
 	$('#trackbtns').addClass('notSearch');
+	$('#rename').addClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
 }
 function DatasetButton() {
 	clearTable();
@@ -47,30 +48,41 @@ function DatasetButton() {
 	$('#librarybtns').addClass('notSearch');
 	$('#playlistbtns').addClass('notSearch');
 	$('#trackbtns').addClass('notSearch');
-}
-function DeleteUserButton(){
-	clearTable();
-	$('#uploadData').addClass('notSearch');
-	$('#librarybtns').addClass('notSearch');
-	$('#playlistbtns').addClass('notSearch');
-	$('#trackbtns').addClass('notSearch');
+	$('#rename').addClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
 }
 function librarybtn(){
 	$('#librarybtns').removeClass('notSearch');
 	$('#playlistbtns').addClass('notSearch');
 	$('#trackbtns').addClass('notSearch');
+	$('#rename').addClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
 }
 function playlistbtn(){
 	$('#librarybtns').addClass('notSearch');
 	$('#playlistbtns').removeClass('notSearch');
 	$('#trackbtns').addClass('notSearch');
+	$('#rename').addClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
 }
 function trackbtn(){
 	$('#librarybtns').addClass('notSearch');
 	$('#playlistbtns').addClass('notSearch');
 	$('#trackbtns').removeClass('notSearch');
+	$('#rename').addClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
 }
-
+function renamebtn(type){
+	renamechoice = type
+	$('#rename').removeClass('notSearch');
+	$('#copyplaylist').addClass('notSearch');
+}
+function copybtn(type){
+	playlistarr = getavailableplaylists();
+	$("#allplaylists").select2({ data: playlistarr });
+	$('#copyplaylist').removeClass('notSearch');
+	$('#rename').addClass('notSearch');
+}
 //DISPLAYING TABLES
 function displayLibraries(){
 	clearMain()
@@ -121,10 +133,10 @@ function displayLibraries(){
         	selectedLibraryID = this.cells[0].innerHTML
         	//alert(selectedLibraryID)
         	if(selectedRow != null){
-        		selectedRow.style.backgroundColor = "transparent"
+        		selectedRow.style.backgroundColor = "transparent";
         	}
-        	this.style.backgroundColor = "#B0BED9"
-            selectedRow = this
+        	this.style.backgroundColor = "#B0BED9";
+            selectedRow = this;
             librarybtn();
         } );  
     }
@@ -230,16 +242,19 @@ function displayTracks(){
         var tBody = document.createElement("tbody");
         table.appendChild (tBody); 
 
+        var position = document.createElement('th');
         var trackID = document.createElement('th');
         var name = document.createElement('th');
         var artist = document.createElement('th');
         var album = document.createElement('th');
         var genre = document.createElement('th');
+        row.appendChild(position);
         row.appendChild(trackID);
         row.appendChild(name);
         row.appendChild(artist);
         row.appendChild(album);
         row.appendChild(genre);
+        trackID.innerHTML = "#";
         trackID.innerHTML = "Track ID";
         name.innerHTML = "Track Name";
         artist.innerHTML = "Artist";
@@ -255,22 +270,25 @@ function displayTracks(){
             var col3 = document.createElement('td');
             var col4 = document.createElement('td');
             var col5 = document.createElement('td');
+            var col6 = document.createElement('td');
             rowNum.appendChild(col1);
             rowNum.appendChild(col2);
             rowNum.appendChild(col3);
             rowNum.appendChild(col4);
             rowNum.appendChild(col5);
-            col1.innerHTML = json[i][0];
-            col2.innerHTML = json[i][1];
-            col3.innerHTML = json[i][2];
-            col4.innerHTML = json[i][3];
-            col5.innerHTML = json[i][4];
+            rowNum.appendChild(col6);
+            col1.innerHTML = i+1;
+            col2.innerHTML = json[i][0];
+            col3.innerHTML = json[i][1];
+            col4.innerHTML = json[i][2];
+            col5.innerHTML = json[i][3];
+            col6.innerHTML = json[i][4];
             i++;
             numRows++;
         }
         $('#Table').dataTable();         
         $('#Table tbody').on( 'click', 'tr', function () {
-        	selectedTrackID = this.cells[0].innerHTML
+        	selectedTrackID = this.cells[1].innerHTML
         	if(selectedRow != null){
         		selectedRow.style.backgroundColor = "transparent"
         	}
@@ -287,24 +305,76 @@ function displayTracks(){
 
 //DELETING OBJECTS
 function deleteLibrary(){
-	
+	var restUrl = "rest/query/deleteLibrary/" + selectedLibraryID;
+	$.ajax({
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+        	displayLibraries()
+           // alert("your library has been deleted")
+        }
+    });	
 }
 
 function deletePlaylist(){
-	
+	var restUrl = "rest/query/deletePlaylist/" + selectedPlaylistID;
+	$.ajax({
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+        	displayPlaylists()
+           // alert("your library has been deleted")
+        }
+    });	
 }
 
 function deleteTrack(){
-	
+	var restUrl = "rest/query/deletePlaylistTrack/"+selectedPlaylistID +"/"+selectedTrackID
+	$.ajax({
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+        	displayTracks()
+           // alert("your library has been deleted")
+        }
+    });	
 }
 
 //RENAMING OBJECTS
-function renamePlaylist(){
-	
-}
-
-function renameTrack(){
-	
+function rename(){
+	var newname = document.getElementById("renamefield").value
+	if(renamechoice == 1){
+		var restUrl = "rest/query/renamePlaylist/"+selectedPlaylistID +"/"+newname
+		$.ajax({
+	        'async': false,
+	        'global': false,
+	        'url': restUrl,
+	        'dataType': "json",
+	        'success': function (data) {
+	        	displayPlaylists()
+	           // alert("your library has been deleted")
+	        }
+	    });	
+	}
+	else{
+		var restUrl = "rest/query/renameTrack/"+selectedTrackID +"/"+newname
+		$.ajax({
+	        'async': false,
+	        'global': false,
+	        'url': restUrl,
+	        'dataType': "json",
+	        'success': function (data) {
+	        	displayTracks()
+	           // alert("your library has been deleted")
+	        }
+	    });	
+	}	
 }
 
 //COPY
@@ -312,139 +382,31 @@ function copyTrack(){
 	
 }
 
-function displayfailuredata(){
-	clearTable();
-	document.getElementById("TableTitle").innerHTML = "Erroneous Data:";
-	document.getElementById("TableTitle").style.visibility = "visible"
-	$('#uploadData').addClass('notSearch');
-	$('#userControls').addClass('notSearch');
-	$('#createuser').addClass('notSearch');
-	$('#edituser').addClass('notSearch');
-	$('#edituserinfo').addClass('notSearch');
-	$('#deleteuser').addClass('notSearch');
-	
-    var restUrl = "rest/query/failedEntries";
-    var json = (function () {
+function getavailableplaylists(){
+	alert("in funct")
+	var array = (function () {
         var json = null;
         $.ajax({
             'async': false,
             'global': false,
-            'url': restUrl,
+            'url': "rest/query/searchPlaylists/"+selectedLibraryID ,
             'dataType': "json",
             'success': function (data) {
                 json = data;
             }
         });
         return json;
-    })();
-    var table = document.getElementById("Table");
-    var header = table.createTHead();
-    var row = header.insertRow(0);
-    var tBody = document.createElement("tbody");
-    table.appendChild (tBody); 
-    
-    //var id = document.createElement('th');
-    var date = document.createElement('th');
-    var eventId = document.createElement('th');
-    var failureClass = document.createElement('th');
-    var tac = document.createElement('th');
-    var mcc = document.createElement('th');
-    var mnc = document.createElement('th');
-    var cellId = document.createElement('th');
-   // var duration = document.createElement('th');
-    var causeCode = document.createElement('th');
-    var neVersion = document.createElement('th');
-    var imsi = document.createElement('th');  
-   // row.appendChild(id);
-    row.appendChild(date);
-    row.appendChild(eventId);
-    row.appendChild(failureClass);
-    row.appendChild(tac);
-    row.appendChild(mcc);
-    row.appendChild(mnc);
-    row.appendChild(cellId);
-   // row.appendChild(duration);
-    row.appendChild(causeCode);
-    row.appendChild(neVersion);
-    row.appendChild(imsi);    
-    //id.innerHTML = "ID";
-    date.innerHTML = "Date";
-    eventId.innerHTML = "Event ID";
-    failureClass.innerHTML = "Failure Class";
-    tac.innerHTML = "TAC";
-    mcc.innerHTML = "MCC";
-    mnc.innerHTML = "MNC";
-    cellId.innerHTML = "Cell ID";
-   // duration.innerHTML = "Duration";
-    causeCode.innerHTML = "Cause Code";
-    neVersion.innerHTML = "Ne Version";
-    imsi.innerHTML = "IMSI";
-    
-    if(json != null && json.length != 0) {
-        var str = json.toString();
-        var arrayOfElements = str.split(',');
-        var arrayLength = arrayOfElements.length;
-        var i = 0;
-        var numRows = 0;
-        while ( i < arrayLength) {
-        	var rowNum = tBody.insertRow(numRows);
-            //var col1 = document.createElement('td');
-            var col2 = document.createElement('td');
-            var col3 = document.createElement('td');
-            var col4 = document.createElement('td');
-            var col5 = document.createElement('td');
-            var col6 = document.createElement('td');
-            var col7 = document.createElement('td');
-            var col8 = document.createElement('td');
-            //var col9 = document.createElement('td');
-            var col10 = document.createElement('td');
-            var col11 = document.createElement('td');
-            var col12 = document.createElement('td');       
-           
-            //rowNum.appendChild(col1);
-            rowNum.appendChild(col2);
-            rowNum.appendChild(col3);
-            rowNum.appendChild(col4);
-            rowNum.appendChild(col5);
-            rowNum.appendChild(col6);
-            rowNum.appendChild(col7);
-            rowNum.appendChild(col8);
-            //rowNum.appendChild(col9);
-            rowNum.appendChild(col10);
-            rowNum.appendChild(col11);
-            rowNum.appendChild(col12);
-            //col1.innerHTML = arrayOfElements[i];
-            i++;
-            col2.innerHTML = arrayOfElements[i];
-            i++;
-            col3.innerHTML = arrayOfElements[i];
-            i++;
-            col4.innerHTML = arrayOfElements[i];
-            i++;
-            col5.innerHTML = arrayOfElements[i];
-            i++;
-            col6.innerHTML = arrayOfElements[i];
-            i++;
-            col7.innerHTML = arrayOfElements[i];
-            i++;
-            col8.innerHTML = arrayOfElements[i];
-            i++;
-            //col9.innerHTML = arrayOfElements[i];
-            i++;
-            col10.innerHTML = arrayOfElements[i];
-            i++;
-            col11.innerHTML = arrayOfElements[i];
-            i++;
-            col12.innerHTML = arrayOfElements[i];
-            i++;
-            numRows++;
-        }
-        $('#Table').dataTable(); 
-        tableexists = true;
-    }
-    else {
-        alert("Result not found.");
-    }
+    })();   
+	
+	alert(array)
+	alert(array[0][1])
+	var playlists = []
+	for(i = 0; i< array.length; i++){
+		playlists.push(array[i][1]);
+	}
+	alert(playlists)
+		
+	return array
 }
 
 function clearTable() {
@@ -461,10 +423,3 @@ function clearTable() {
 		div.parentNode.removeChild(div);
 	}
 }
-
-$(function() {
-	$(".clickable-row").click(function() {
-	        window.document.location = $(this).data("href");
-	});	
-});
-

@@ -43,9 +43,10 @@ public class PlaylistTrackDAO implements IPlaylistTrackDAO {
 	}
 	
 	@Override
-	public PlaylistTrack getPlaylistTrackByName(String PlaylistTrackname) {
-		Query query  = em.createQuery("from PlaylistTrack where PlaylistTrackname = :PlaylistTrackname");
-		query.setParameter("PlaylistTrackname", PlaylistTrackname);
+	public PlaylistTrack getPlaylistTrackByID(int playlistID, int trackID) {
+		Query query  = em.createQuery("from PlaylistTrack where playlistID = :playlistID and trackID = :trackID");
+		query.setParameter("playlistID", playlistID);
+		query.setParameter("trackID", trackID);
 
 		if(query.getResultList().size()>0){
 			PlaylistTrack PlaylistTrack =  (PlaylistTrack) query.getResultList().get(0);
