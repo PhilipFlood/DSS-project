@@ -11,7 +11,7 @@ function authenticate(){
 			success : function isSearchData(data) {
 				if(data.username != ""){
 					localStorage.setItem("username",data.username);			
-					window.location.assign("AdminMenu.html");
+					window.location.assign("MainMenu.html");
 				}
 				else{
 					alert("User or password is incorrect")

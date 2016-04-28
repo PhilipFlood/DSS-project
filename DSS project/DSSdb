@@ -1,6 +1,3 @@
-create database itunes;
-use itunes;
-
 drop database bdkmv;
 create database bdkmv;
 use bdkmv;
@@ -14,27 +11,27 @@ drop table PlaylistTrack;
 create Table Users(
 username    		Varchar(20) primary key,
 password    		Varchar(20)
-);   
+) ENGINE=MyISAM;   
 
 
 create table Library(
 libraryID           Varchar(40) primary key,
 username			Varchar(20)  
-);
+) ENGINE=MyISAM;
 
  
 create table Playlist(
 playlistID          int(6) primary key,
 name      			Varchar(100),
 libraryID     		Varchar(40) 
-);
+) ENGINE=MyISAM;
 
 
 create table PlaylistTrack(
 Id              	int(6) primary key auto_increment,
 playlistID      	int(6)  ,
 trackID     		int(6) 
-);
+) ENGINE=MyISAM;
 
 
 create table Track(
@@ -43,17 +40,15 @@ name      			Varchar(100),
 artist     			Varchar(100),
 album      			Varchar(100),
 genre      			Varchar(100)
-);
+) ENGINE=MyISAM;
 
 
-
-insert into Users values("philip", "123");
-insert into Users values("john", "456");
-insert into Library values("ASED1234", "jake");
-insert into Playlist values("newplaylist", 1);
-insert into PlaylistTrack values(1,1, 1);
-insert into Track values(1, "good kid","kendrick lamar", "GKMC", "hip-hop");
-
+#insert into Users values("philip", "123");
+#insert into Users values("john", "456");
+#insert into Library values("ASED1234", "jake");
+#insert into Playlist values("newplaylist", 1);
+#insert into PlaylistTrack values(1,1, 1);
+#insert into Track values(1, "good kid","kendrick lamar", "GKMC", "hip-hop");
 
 select * from Users;
 select * from Library;

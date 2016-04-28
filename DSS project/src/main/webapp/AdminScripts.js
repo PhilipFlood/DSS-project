@@ -1,7 +1,7 @@
 var tableexists = false;
-var selectedLibraryID;
-var selectedPlaylistID;
-var selectedTrackID;
+var selectedLibraryID = null
+var selectedPlaylistID = null
+var selectedTrackID = null
 var selectedRow;
 var renamechoice;
 
@@ -41,6 +41,7 @@ function clearMain(){
 	$('#trackbtns').addClass('notSearch');
 	$('#rename').addClass('notSearch');
 	$('#copyplaylist').addClass('notSearch');
+	$('#deleteUser').addClass('notSearch');
 }
 function DatasetButton() {
 	clearTable();
@@ -50,6 +51,7 @@ function DatasetButton() {
 	$('#trackbtns').addClass('notSearch');
 	$('#rename').addClass('notSearch');
 	$('#copyplaylist').addClass('notSearch');
+	$('#deleteUser').addClass('notSearch');
 }
 function librarybtn(){
 	$('#librarybtns').removeClass('notSearch');
@@ -57,6 +59,7 @@ function librarybtn(){
 	$('#trackbtns').addClass('notSearch');
 	$('#rename').addClass('notSearch');
 	$('#copyplaylist').addClass('notSearch');
+	$('#deleteUser').addClass('notSearch');
 }
 function playlistbtn(){
 	$('#librarybtns').addClass('notSearch');
@@ -64,6 +67,7 @@ function playlistbtn(){
 	$('#trackbtns').addClass('notSearch');
 	$('#rename').addClass('notSearch');
 	$('#copyplaylist').addClass('notSearch');
+	$('#deleteUser').addClass('notSearch');
 }
 function trackbtn(){
 	$('#librarybtns').addClass('notSearch');
@@ -71,6 +75,7 @@ function trackbtn(){
 	$('#trackbtns').removeClass('notSearch');
 	$('#rename').addClass('notSearch');
 	$('#copyplaylist').addClass('notSearch');
+	$('#deleteUser').addClass('notSearch');
 }
 function renamebtn(type){
 	renamechoice = type
@@ -83,14 +88,18 @@ function copybtn(type){
 	$('#copyplaylist').removeClass('notSearch');
 	$('#rename').addClass('notSearch');
 }
+function confirmDelete(){
+	clearTable()
+	clearMain()
+	$('#deleteUser').removeClass('notSearch');
+}
+
 //DISPLAYING TABLES
 function displayLibraries(){
+	selectedLibraryID = null
 	clearMain()
-	document.getElementById("TableTitle").innerHTML = "Libraries:";
-	document.getElementById("TableTitle").style.visibility = "visible"
 	var username = localStorage.getItem("username");
     var restUrl = "rest/query/searchLibrary/"+username
-   
     var json = (function () {
         var json = null;
         $.ajax({
@@ -106,7 +115,8 @@ function displayLibraries(){
     })();
     
     if(json != null && json.length != 0) {
-    	
+    	document.getElementById("TableTitle").innerHTML = "Libraries:";
+    	document.getElementById("TableTitle").style.visibility = "visible"
     	var table = document.getElementById("Table");
         var header = table.createTHead();
         var row = header.insertRow(0);
@@ -137,22 +147,24 @@ function displayLibraries(){
         	}
         	this.style.backgroundColor = "#B0BED9";
             selectedRow = this;
-            librarybtn();
+            
         } );  
+        librarybtn();
     }
     else {
         alert("Library not found.");
-        $('#Table').dataTable();
+        //$('#Table').dataTable();
     }
 }
 
 function displayPlaylists(){
+	selectedPlaylistID = null
+	if(selectedLibraryID != null){
 	clearMain()
 	document.getElementById("TableTitle").innerHTML = "Playlists in "+ selectedLibraryID+":";
 	document.getElementById("TableTitle").style.visibility = "visible"
 	var restUrl = "rest/query/searchPlaylists/"+selectedLibraryID
-   
-    //alert(restUrl)
+	
     var json = (function () {
         var json = null;
         $.ajax({
@@ -203,22 +215,28 @@ function displayPlaylists(){
         		selectedRow.style.backgroundColor = "transparent"
         	}
         	this.style.backgroundColor = "#B0BED9"
-            selectedRow = this
-            playlistbtn();
+            selectedRow = this      
         } );  
+        playlistbtn();
     }
     else {
-        alert("Playlist not found.");
-        $('#Table').dataTable();
+        alert("No playlists in library.");
+        displayLibraries()
     }
+	}
+	else{
+		alert("please select a library")}
 }
 
 function displayTracks(){
+	selectedTrackID = null
+	if(selectedPlaylistID != null){
 	clearMain()
 	document.getElementById("TableTitle").innerHTML = "Tracks in "+ selectedPlaylistID+":";
 	document.getElementById("TableTitle").style.visibility = "visible"
-	var restUrl = "rest/query/searchTracks/"+selectedPlaylistID   
 	
+	
+	var restUrl = "rest/query/searchTracks/"+selectedPlaylistID   
     var json = (function () {
         var json = null;
         $.ajax({
@@ -294,13 +312,16 @@ function displayTracks(){
         	}
         	this.style.backgroundColor = "#B0BED9"
             selectedRow = this
-            trackbtn();
         } );  
+        trackbtn();
     }
     else {
     	clearTable()
+    	displayPlaylists();
         alert("no tracks in playlist.");
     }
+	}
+	else{alert("please select a playlist")}
 }
 
 //DELETING OBJECTS
@@ -378,11 +399,28 @@ function rename(){
 }
 
 //COPY
-function copyTrack(){
+function moveTrack(){
 	var newplaylist = document.getElementById('allplaylists').value;
 	var newplaylistID = newplaylist.split(',')[0];
 	
 	var restUrl = "rest/query/moveTrack/"+selectedPlaylistID +"/"+ newplaylistID +"/"+selectedTrackID
+	$.ajax({
+        'async': false,
+        'global': false,
+        'url': restUrl,
+        'dataType': "json",
+        'success': function (data) {
+        	displayTracks()
+        }
+    });	
+}
+
+//COPY
+function copyTrack(){
+	var newplaylist = document.getElementById('allplaylists').value;
+	var newplaylistID = newplaylist.split(',')[0];
+	
+	var restUrl = "rest/query/copyTrack/"+selectedPlaylistID +"/"+ newplaylistID +"/"+selectedTrackID
 	$.ajax({
         'async': false,
         'global': false,

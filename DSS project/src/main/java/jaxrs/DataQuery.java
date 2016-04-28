@@ -382,4 +382,17 @@ public class DataQuery {
 		ptracks.add(newptrack);
 		playlistTrackService.addPlaylistTrack(ptracks);
 	}
+	
+	//COPY TRACKS
+		@GET
+		@Path("/copyTrack/{oldPlaylistID}/{newPlaylistID}/{trackID}")
+		public void copyTrack(@PathParam("oldPlaylistID") int oldPlaylistID,@PathParam("newPlaylistID") int newPlaylistID, @PathParam("trackID") int trackID) {			
+			Track track = trackService.getTrackByID(trackID);
+			Playlist playlist = playlistService.getPlaylistByID(newPlaylistID);
+			PlaylistTrack newptrack = new PlaylistTrack(track, playlist);
+			
+			ArrayList<PlaylistTrack> ptracks = new ArrayList<PlaylistTrack>();
+			ptracks.add(newptrack);
+			playlistTrackService.addPlaylistTrack(ptracks);
+		}
 }

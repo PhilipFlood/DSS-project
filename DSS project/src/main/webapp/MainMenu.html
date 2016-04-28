@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Main Menu</title>
+
+	<!-- bootstrap dropdown -->
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="SearchStyle.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type="text/javascript" src="UserScripts.js"></script> 
+	<script type="text/javascript" src="AdminScripts.js"></script> 
+	
+	<!-- TABLES -->
+	<link rel="stylesheet"	href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+	<script type="text/javascript" 	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	
+	<!-- DROPDOWN AUTOCOMPLETE -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+	
+</head>
+
+<body onload="admincheck()">
+<div id="container">
+<!--HEADER-->
+	<div id="header">
+		<img src="http://icons.iconarchive.com/icons/cornmanthe3rd/metronome/512/Media-iTunes-icon.png" width="135" height="135" style="float:left;">
+		<div id="userinfo">
+			<p id="loggedin"></p>
+			<a href="login.html" onclick="logout()">Logout</a>
+		</div>
+	</div>
+	
+	
+<!--SIDEBAR-->
+	<div Id="sidebar">
+	<div id="searchType" class="sidebar">
+		<h3>User Controls</h3>
+		<p><button onclick="DatasetButton()" class="btn btn-primary" type="button">Backup iTunes Library</button></p>
+		<p><button onclick="displayLibraries()" class="btn btn-primary" type="button">View Libraries</button></p>			
+		<p><button onclick="confirmDelete()" class="btn btn-primary" type="button">Delete account</button></p>
+	</div>
+	
+	<div id="rename" class="notSearch">
+		<h3>Rename:</h3>
+		<input type="text" class="form-control" id="renamefield" placeholder="new name" > 
+		<button onclick="rename()" class="btn btn-primary" type="button" >Submit</button></p>
+	</div>
+	
+	<div id="copyplaylist" class="notSearch">
+		<h3>Change to:</h3>
+		<p>Playlist to copy/move to:
+		<select class="js-example-basic-multiple" id="allplaylists" style="width:100%"></select></p>
+		<button onclick="moveTrack()" class="btn btn-primary" type="button" >Move</button></p>
+		<button onclick="copyTrack()" class="btn btn-primary" type="button" >Copy</button></p>
+		<p>Note: moving will remove this track from the current playlist</p>
+	</div>
+	<div id="deleteUser" class="sidebar notSearch"">
+		<h3>Delete Account:</h3>
+		<p><b>are you sure you want to delete your account? your libraries will also be deleted!</b></p>
+		<p><button onclick="deleteuser()" class="btn btn-primary" type="button">Yes, Delete Account</button></p>
+		<p><button onclick="clearMain()" class="btn btn-primary" type="button">Back</button></p>
+	</div>
+</div>
+
+<!-- MAIN SECTION -->
+	<div id="TableSection">
+		<h3 id="TableTitle" style="visibility: hidden"></h3>
+		<table id ="Table" class="table table-striped"></table>	
+		<div id="mainsection">
+			<div id="uploadData" class="sidebar notSearch">
+				<h3>Upload Library</h3>		
+				<p>.xml Library file:</p>
+				<input type="file" id="filepath" placeholder="XML FILE"><p></p>
+				<button onclick="upload()" class="btn btn-primary" type="button">Load data</button><br>
+			</div>	
+		</div>
+	</div>
+	
+	<div id="chartSection">
+	<div id="librarybtns" class="sidebar notSearch">
+		<center>
+		<button onclick="displayPlaylists()" class="btn btn-primary" type="button" style="width:250px">View Library</button>
+		<button onclick="deleteLibrary()" class="btn btn-primary" type="button" style="width:250px">Delete Library</button>	
+		<p>click on a row to select Library</p></center>
+	</div>
+	
+	<div id="playlistbtns" class="sidebar notSearch">
+		<center>
+		<button onclick="displayTracks()" class="btn btn-primary" type="button" style="width:250px">View Playlist tracks</button>
+		<button onclick="renamebtn(1)" class="btn btn-primary" type="button" style="width:250px">Rename Playlist</button>
+		<button onclick="deletePlaylist()" class="btn btn-primary" type="button" style="width:250px">Delete Playlist</button>	
+		<p></p>
+		<button onclick="displayLibraries()" class="btn btn-primary" type="button" style="width:250px">Back</button>	<p></p>
+		<p>click on a row to select a Playlist</p>
+		</center>
+	</div>
+	
+	<div id="trackbtns" class="sidebar notSearch">
+		<center>
+		<button onclick="deleteTrack()" class="btn btn-primary" type="button" style="width:250px">Remove Track From Playlist</button>
+		<button onclick="renamebtn(2)" class="btn btn-primary" type="button" style="width:250px">Rename Track</button>
+		<button onclick="copybtn()" class="btn btn-primary" type="button" style="width:250px">Move/Copy Track to Other Playlist</button>	
+		<p></p>
+		<button onclick="displayPlaylists()" class="btn btn-primary" type="button" style="width:250px">Back</button><p></p>
+		<p>click on a row to select a Track</p></center>
+	</div>
+	</div>
+	<div id="footer">Copyright &copy; Bits Don't Kill My Vibe<br></div>
+</div>
+
+</body>
+</html>
